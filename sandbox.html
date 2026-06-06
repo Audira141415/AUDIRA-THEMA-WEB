@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaaS Sandbox Playground - AUDIRA THEMA</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Righteous&family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* Reset & Base variables from injected theme */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: var(--sb-background, #f1f5f9);
+      color: var(--sb-text, #0f172a);
+      font-family: var(--sb-body-font, 'Inter', sans-serif);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    h1, h2, h3, h4 { font-family: var(--sb-heading-font, 'Inter', sans-serif); }
+    
+    .sidebar {
+      width: 260px;
+      background: var(--sb-surface, #ffffff);
+      border-right: var(--sb-border-width, 1px) solid var(--sb-border-color, #e2e8f0);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+    }
+    .sidebar-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--sb-primary, #3b82f6);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .nav-item {
+      padding: 12px 16px;
+      border-radius: var(--sb-radius, 8px);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      color: var(--sb-text);
+      opacity: 0.7;
+    }
+    .nav-item:hover, .nav-item.active {
+      opacity: 1;
+      background: color-mix(in srgb, var(--sb-primary) 10%, transparent);
+      color: var(--sb-primary);
+    }
+    
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    
+    .top-header {
+      height: 80px;
+      background: var(--sb-surface, #ffffff);
+      border-bottom: var(--sb-border-width, 1px) solid var(--sb-border-color, #e2e8f0);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: var(--sb-radius, 8px);
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: 0.2s;
+    }
+    .btn-primary {
+      background: var(--sb-primary, #3b82f6);
+      color: #fff;
+      box-shadow: var(--sb-shadow, 0 4px 6px rgba(0,0,0,0.1));
+    }
+    .btn-outline {
+      background: transparent;
+      border: var(--sb-border-width, 1px) solid var(--sb-border-color);
+      color: var(--sb-text);
+    }
+    
+    .dashboard {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .stat-card {
+      background: var(--sb-surface, #ffffff);
+      border: var(--sb-border-width, 1px) solid var(--sb-border-color, #e2e8f0);
+      border-radius: var(--sb-radius, 8px);
+      padding: 24px;
+      box-shadow: var(--sb-shadow, 0 4px 6px rgba(0,0,0,0.1));
+    }
+    .stat-title {
+      font-size: 0.9rem;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--sb-text);
+    }
+    
+    .chart-section {
+      grid-column: span 2;
+      background: var(--sb-surface, #ffffff);
+      border: var(--sb-border-width, 1px) solid var(--sb-border-color, #e2e8f0);
+      border-radius: var(--sb-radius, 8px);
+      padding: 24px;
+      box-shadow: var(--sb-shadow, 0 4px 6px rgba(0,0,0,0.1));
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .chart-placeholder {
+      flex: 1;
+      margin-top: 20px;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--sb-secondary) 20%, transparent) 0%, transparent 100%);
+      border-radius: calc(var(--sb-radius) - 4px);
+      border: 2px dashed color-mix(in srgb, var(--sb-secondary) 40%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sb-secondary);
+      font-weight: 600;
+    }
+    
+    .list-section {
+      background: var(--sb-surface, #ffffff);
+      border: var(--sb-border-width, 1px) solid var(--sb-border-color, #e2e8f0);
+      border-radius: var(--sb-radius, 8px);
+      padding: 24px;
+      box-shadow: var(--sb-shadow, 0 4px 6px rgba(0,0,0,0.1));
+    }
+    
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--sb-border-color);
+    }
+    .list-item:last-child {
+      border-bottom: none;
+    }
+    
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: color-mix(in srgb, var(--sb-accent) 20%, transparent);
+      color: var(--sb-accent);
+    }
+    
+    /* Toolbar for sandbox controls */
+    .sandbox-toolbar {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      z-index: 1000;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <span>✦</span> <span id="theme-name-display">Sandbox</span>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-item active">Dashboard</div>
+      <div class="nav-item">Analytics</div>
+      <div class="nav-item">Customers</div>
+      <div class="nav-item">Settings</div>
+    </div>
+  </div>
+  
+  <div class="main-content">
+    <div class="top-header">
+      <div style="font-size: 1.25rem; font-weight: 600; font-family: var(--sb-heading-font);">Overview</div>
+      <div style="display:flex; gap:12px;">
+        <button class="btn btn-outline">Export</button>
+        <button class="btn btn-primary">+ New Report</button>
+      </div>
+    </div>
+    
+    <div class="dashboard">
+      <div class="stat-card">
+        <div class="stat-title">Total Revenue</div>
+        <div class="stat-value">$124,563.00</div>
+        <div style="color: var(--sb-secondary); font-size: 0.85rem; margin-top: 8px; font-weight: 600;">↑ 12% from last month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Active Users</div>
+        <div class="stat-value">8,234</div>
+        <div style="color: var(--sb-secondary); font-size: 0.85rem; margin-top: 8px; font-weight: 600;">↑ 5.2% from last month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Bounce Rate</div>
+        <div class="stat-value">23.5%</div>
+        <div style="color: var(--sb-accent); font-size: 0.85rem; margin-top: 8px; font-weight: 600;">↓ 1.2% from last month</div>
+      </div>
+      
+      <div class="chart-section">
+        <div style="font-weight: 700; font-family: var(--sb-heading-font); font-size: 1.1rem;">Revenue Growth</div>
+        <div class="chart-placeholder">
+          Responsive Chart Area
+        </div>
+      </div>
+      
+      <div class="list-section">
+        <div style="font-weight: 700; font-family: var(--sb-heading-font); font-size: 1.1rem; margin-bottom: 16px;">Recent Transactions</div>
+        <div class="list-item">
+          <div>
+            <div style="font-weight: 600;">Spotify Subscription</div>
+            <div style="font-size: 0.8rem; opacity: 0.6;">Today, 10:24 AM</div>
+          </div>
+          <div class="badge">Completed</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <div style="font-weight: 600;">AWS Web Services</div>
+            <div style="font-size: 0.8rem; opacity: 0.6;">Yesterday, 4:00 PM</div>
+          </div>
+          <div class="badge">Completed</div>
+        </div>
+        <div class="list-item">
+          <div>
+            <div style="font-weight: 600;">Figma Pro</div>
+            <div style="font-size: 0.8rem; opacity: 0.6;">May 12, 9:00 AM</div>
+          </div>
+          <div class="badge" style="background: color-mix(in srgb, var(--sb-primary) 20%, transparent); color: var(--sb-primary);">Pending</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sandbox-toolbar">
+    <div style="font-size: 0.9rem;">
+      <span style="opacity:0.7">Playing with:</span> <b id="toolbar-theme-name" style="color:#4ade80;">Theme</b>
+    </div>
+    <button onclick="window.history.back()" style="background:#334155; border:none; padding:8px 16px; border-radius:20px; color:white; cursor:pointer; font-weight:bold; font-family:'Inter', sans-serif;">← Go Back</button>
+  </div>
+
+  <script src="js/sandbox.js"></script>
+</body>
+</html>

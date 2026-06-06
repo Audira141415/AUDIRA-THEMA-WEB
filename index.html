@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUDIRA THEMA — Explore Beautiful Design Themes</title>
+  <meta name="description" content="Discover and explore a curated collection of stunning design themes. Preview colors, typography, and UI components for Memphis, Brutalist, Glassmorphism, Cyberpunk, and more." />
+  <meta name="keywords" content="design themes, UI themes, color palettes, typography, web design, CSS themes" />
+
+  <!-- Preconnect for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Righteous&family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css?v=5" />
+</head>
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo" id="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">AUDIRA <span class="logo-accent">THEMA</span></span>
+      </a>
+      <nav class="header-nav" id="header-nav">
+        <a href="#themes" class="nav-link">Themes</a>
+        <a href="#about" class="nav-link">About</a>
+        <button class="mode-toggle" id="mode-toggle" aria-label="Toggle dark/light mode">
+          <span class="mode-icon sun">☀</span>
+          <span class="mode-icon moon">☽</span>
+          <span class="mode-toggle-thumb"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== PREMIUM HERO SECTION ========== -->
+  <section class="hero premium-hero" id="hero">
+    <div class="hero-bg-anim">
+      <div class="bg-mesh bg-mesh-1"></div>
+      <div class="bg-mesh bg-mesh-2"></div>
+      <div class="bg-mesh bg-mesh-3"></div>
+      <div class="bg-glass-overlay"></div>
+    </div>
+
+    <div class="hero-split-layout">
+      <!-- Left: Text Content -->
+      <div class="hero-split-left">
+        <div class="hero-badge animate-up" style="animation-delay: 0.1s;">
+          <span class="badge-icon">✦</span> 33 Curated Design Themes
+        </div>
+        <h1 class="hero-title animate-up" style="animation-delay: 0.2s;">
+          Discover The Ultimate <br/>
+          <span class="hero-title-gradient" id="hero-theme-name">Memphis</span><br />
+          Design System
+        </h1>
+        <p class="hero-subtitle animate-up" style="animation-delay: 0.3s;">
+          A premium collection of modern design systems, color palettes, and UI concepts built with vanilla CSS. Click generate to explore randomly!
+        </p>
+
+        <div class="hero-actions animate-up" style="animation-delay: 0.4s;">
+          <button class="btn-generate" id="btn-generate">
+            <span class="btn-icon">⚡</span> Random Theme
+          </button>
+          <button class="btn-generate" id="btn-magic-open" style="background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);">
+            <span class="btn-icon">🪄</span> Magic Build
+          </button>
+          <button class="btn-generate" id="btn-cross-breed-open" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+            <span class="btn-icon">🧬</span> Cross-Breed
+          </button>
+          <button class="btn-explore" id="btn-explore">
+            Explore Gallery
+          </button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="hero-search animate-up" id="hero-search" style="animation-delay: 0.5s;">
+          <span class="search-icon">⌕</span>
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Search themes... (e.g. Memphis, dark, playful)"
+            autocomplete="off"
+          />
+          <span class="search-shortcut">⌘K</span>
+        </div>
+      </div>
+      
+      <!-- Right: Auto Morphing Dashboard -->
+      <div class="hero-split-right animate-up" style="animation-delay: 0.3s;" id="hero-split-right">
+        <div class="theme-showcase-container" id="hero-showcase-container" style="margin: 0; padding: 20px; transform: scale(0.85); transform-origin: center right;">
+          <div class="dashboard-mockup">
+            <!-- macOS Window Controls -->
+            <div class="mockup-header">
+              <div class="mac-controls">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="mockup-url-bar">dashboard.audira.thema</div>
+              <div class="mockup-header-right"></div>
+            </div>
+            <!-- Dashboard Body -->
+            <div class="mockup-body" style="height: 400px;">
+              <!-- Sidebar -->
+              <div class="mockup-sidebar" style="width: 180px;">
+                <div class="sidebar-logo"></div>
+                <div class="sidebar-menu">
+                  <div class="menu-item active"></div>
+                  <div class="menu-item"></div>
+                  <div class="menu-item"></div>
+                </div>
+                <div class="sidebar-bottom"></div>
+              </div>
+              <!-- Main Content Area -->
+              <div class="mockup-main" style="padding: 16px 20px;">
+                <!-- Top Navbar -->
+                <div class="mockup-topbar">
+                  <div class="topbar-search" style="width: 120px;"></div>
+                  <div class="topbar-user"><div class="user-avatar"></div></div>
+                </div>
+                <div class="mockup-content">
+                  <div class="mockup-title" style="font-size: 1.4rem;">Analytics Overview</div>
+                  <!-- Stat Cards -->
+                  <div class="mockup-stats">
+                    <div class="stat-card">
+                      <div class="stat-icon primary-icon"></div>
+                      <div class="stat-value" style="font-size: 1.2rem;">12.5K</div>
+                    </div>
+                    <div class="stat-card">
+                      <div class="stat-icon secondary-icon"></div>
+                      <div class="stat-value" style="font-size: 1.2rem;">$45,200</div>
+                    </div>
+                    <div class="stat-card">
+                      <div class="stat-icon accent-icon"></div>
+                      <div class="stat-value" style="font-size: 1.2rem;">+24%</div>
+                    </div>
+                  </div>
+                  <!-- Chart Area -->
+                  <div class="mockup-chart-card">
+                    <div class="chart-header">
+                      <div class="chart-title" style="font-size: 1rem;">User Activity</div>
+                      <div class="mockup-btn" style="padding: 4px 10px; font-size: 0.7rem;">Export</div>
+                    </div>
+                    <div class="chart-body" style="padding-top: 10px;">
+                      <div class="chart-bar" style="height: 40%"></div>
+                      <div class="chart-bar" style="height: 70%"></div>
+                      <div class="chart-bar" style="height: 50%"></div>
+                      <div class="chart-bar" style="height: 90%"></div>
+                      <div class="chart-bar" style="height: 60%"></div>
+                      <div class="chart-bar" style="height: 80%"></div>
+                      <div class="chart-bar" style="height: 100%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- Filter Pills -->
+      <div class="filter-pills animate-up" id="filter-pills" style="animation-delay: 0.6s;">
+        <button class="filter-pill active" data-filter="all">All</button>
+        <button class="filter-pill" data-filter="favorites" style="border-color: #ff4757; color: #ff4757;">Favorites ❤️</button>
+        <button class="filter-pill" data-filter="trending">Trending 🔥</button>
+        <button class="filter-pill" data-filter="rare">Rare ✨</button>
+        <button class="filter-pill" data-filter="gaming">Gaming 🎮</button>
+        <button class="filter-pill" data-filter="modern">Modern</button>
+        <button class="filter-pill" data-filter="playful">Playful</button>
+        <button class="filter-pill" data-filter="dark">Dark</button>
+        <button class="filter-pill" data-filter="retro">Retro</button>
+        <button class="filter-pill" data-filter="elegant">Elegant</button>
+        <button class="filter-pill" data-filter="cyberpunk">Cyberpunk</button>
+        <button class="filter-pill" data-filter="glassmorphism">Glassmorphism</button>
+        <button class="filter-pill" data-filter="minimal">Minimal</button>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <span>Scroll to explore</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- ========== THEMES GRID ========== -->
+  <section class="themes-section" id="themes">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-label">Collection</span>
+        <h2 class="section-title">Theme Gallery</h2>
+        <p class="section-description">Each card is styled to match its theme — click to explore the full preview.</p>
+      </div>
+
+      <div class="themes-grid" id="themes-grid">
+        <!-- Cards rendered by JS -->
+      </div>
+
+      <div class="no-results" id="no-results" style="display:none;">
+        <span class="no-results-icon">🔍</span>
+        <h3>No themes found</h3>
+        <p>Try adjusting your search or filter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT SECTION ========== -->
+  <section class="about-section" id="about">
+    <div class="section-container">
+      <div class="about-grid">
+        <div class="about-content">
+          <span class="section-label">About</span>
+          <h2 class="section-title">What is AUDIRA THEMA?</h2>
+          <p class="about-text">
+            AUDIRA THEMA is a curated collection of design themes, each with its own personality.
+            From playful Memphis to futuristic Cyberpunk, explore color palettes, typography systems,
+            and UI component styles — all in one place.
+          </p>
+          <p class="about-text">
+            Each theme comes with ready-to-use CSS custom properties that you can copy and paste
+            directly into your project. Preview buttons, cards, inputs, and badges styled in each theme.
+          </p>
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-number">33</span>
+              <span class="stat-label">Themes</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">198</span>
+              <span class="stat-label">Colors</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">10</span>
+              <span class="stat-label">Font Families</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">∞</span>
+              <span class="stat-label">Possibilities</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ========== MAGIC BUILDER MODAL ========== -->
+  <div class="modal-overlay" id="magic-modal-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(8px);">
+    <div style="background:var(--site-surface-2); padding:32px; border-radius:24px; border:1px solid var(--site-border); width:90%; max-width:400px; color:var(--site-text); position:relative;">
+      <button id="btn-magic-close" style="position:absolute; top:16px; right:16px; background:none; border:none; color:var(--site-text); cursor:pointer; font-size:1.2rem;">✖</button>
+      <h2 style="font-size:1.8rem; font-family:var(--font-heading); margin-bottom:8px;">🪄 Magic Builder</h2>
+      <p style="opacity:0.7; font-size:0.9rem; margin-bottom:24px;">Generate mathematically harmonious themes instantly.</p>
+      
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div>
+          <label style="display:block; margin-bottom:8px; font-weight:600; font-size:0.9rem;">Base Color (Hue: <span id="magic-hue-val">250</span>)</label>
+          <input type="range" id="magic-hue" min="0" max="360" value="250" style="width:100%; accent-color:#ec4899;">
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:8px; font-weight:600; font-size:0.9rem;">Vibrancy (<span id="magic-sat-val">80%</span>)</label>
+          <input type="range" id="magic-sat" min="0" max="100" value="80" style="width:100%; accent-color:#ec4899;">
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:8px; font-weight:600; font-size:0.9rem;">Mode</label>
+          <select id="magic-mode" style="width:100%; padding:10px; background:var(--site-surface); border:1px solid var(--site-border); color:var(--site-text); border-radius:8px;">
+            <option value="dark">Dark Mode</option>
+            <option value="light">Light Mode</option>
+          </select>
+        </div>
+        <button id="btn-magic-execute" style="background:linear-gradient(135deg, #a855f7, #ec4899); color:#fff; border:none; padding:14px; border-radius:12px; font-weight:bold; cursor:pointer; margin-top:10px; transition:0.3s; font-size:1.1rem;">Generate Theme</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer" id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-icon">✦</span>
+        <span>AUDIRA THEMA</span>
+      </div>
+      <p class="footer-text">Crafted with care. Explore, preview, and build beautiful interfaces.</p>
+      <p class="footer-copy">© 2026 AUDIRA THEMA. All themes are free to use.</p>
+    </div>
+  </footer>
+
+  <!-- ========== TOAST ========== -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span class="toast-text" id="toast-text">Copied!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cross-Breed Modal -->
+  <div class="modal-overlay" id="cross-breed-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">🧬 Cross-Breed Themes</h2>
+        <button class="modal-close" id="btn-close-breed-modal">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:20px; font-size:0.9rem; opacity:0.8;">Combine the DNA of two different themes to generate a completely new hybrid aesthetic.</p>
+        
+        <div style="display:flex; gap:16px; margin-bottom:20px;">
+          <div style="flex:1;">
+            <label style="display:block; margin-bottom:8px; font-weight:600;">Theme A (Parent 1)</label>
+            <select id="breed-parent-a" style="width:100%; padding:10px; border-radius:8px; background:var(--site-surface-2); color:var(--site-text); border:1px solid var(--site-border);"></select>
+          </div>
+          <div style="flex:1;">
+            <label style="display:block; margin-bottom:8px; font-weight:600;">Theme B (Parent 2)</label>
+            <select id="breed-parent-b" style="width:100%; padding:10px; border-radius:8px; background:var(--site-surface-2); color:var(--site-text); border:1px solid var(--site-border);"></select>
+          </div>
+        </div>
+
+        <button class="btn-execute" id="btn-execute-breed" style="background: linear-gradient(135deg, #10b981, #059669);">Sploosh! Combine DNA</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/themes.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
+</body>
+</html>

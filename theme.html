@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUDIRA THEMA — Theme Details</title>
+  <meta name="description" content="Explore theme details, colors, and typography." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Righteous&family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/styles.css?v=6" />
+</head>
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" id="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">AUDIRA <span class="logo-accent">THEMA</span></span>
+      </a>
+      <nav class="header-nav" id="header-nav">
+        <a href="index.html#themes" class="nav-link">Gallery</a>
+        <button class="mode-toggle" id="mode-toggle" aria-label="Toggle dark/light mode">
+          <span class="mode-icon sun">☀</span>
+          <span class="mode-icon moon">☽</span>
+          <span class="mode-toggle-thumb"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== THEME DETAILS CONTAINER ========== -->
+  <section class="theme-page-container" id="theme-page-container">
+    <div class="theme-content-wrapper">
+      
+      <div class="theme-back">
+        <a href="index.html#themes" class="btn-back">← Back to Gallery</a>
+      </div>
+
+      <div class="modal-header" id="modal-header" style="position: relative;">
+        <div class="modal-badge" id="modal-badge"></div>
+        <button class="btn-favorite" id="btn-favorite" title="Save to Favorites">
+          <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="favorite-text">Save Theme</span>
+        </button>
+        <h1 class="modal-title" id="modal-title" style="font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 16px;">Loading...</h1>
+        <p class="modal-description" id="modal-description"></p>
+      </div>
+
+      <!-- PREMIUM DASHBOARD SHOWCASE HERO -->
+      <div class="theme-showcase-container" id="theme-showcase">
+        <div class="dashboard-mockup">
+          
+          <!-- macOS Window Controls -->
+          <div class="mockup-header">
+            <div class="mac-controls">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="mockup-url-bar">dashboard.audira.thema</div>
+            <div class="mockup-header-right"></div>
+          </div>
+
+          <!-- Dashboard Body -->
+          <div class="mockup-body">
+            
+            <!-- Sidebar -->
+            <div class="mockup-sidebar">
+              <div class="sidebar-logo"></div>
+              <div class="sidebar-menu">
+                <div class="menu-item active"></div>
+                <div class="menu-item"></div>
+                <div class="menu-item"></div>
+                <div class="menu-item"></div>
+              </div>
+              <div class="sidebar-bottom"></div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="mockup-main">
+              
+              <!-- Top Navbar -->
+              <div class="mockup-topbar">
+                <div class="topbar-search"></div>
+                <div class="topbar-user">
+                  <div class="user-avatar"></div>
+                </div>
+              </div>
+
+              <div class="mockup-content">
+                <div class="mockup-title">Analytics Overview</div>
+                
+                <!-- Stat Cards -->
+                <div class="mockup-stats">
+                  <div class="stat-card">
+                    <div class="stat-icon primary-icon"></div>
+                    <div class="stat-value">12.5K</div>
+                    <div class="stat-label">Total Users</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon secondary-icon"></div>
+                    <div class="stat-value">$45,200</div>
+                    <div class="stat-label">Revenue</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-icon accent-icon"></div>
+                    <div class="stat-value">+24%</div>
+                    <div class="stat-label">Growth</div>
+                  </div>
+                </div>
+
+                <!-- Chart Area -->
+                <div class="mockup-chart-card">
+                  <div class="chart-header">
+                    <div class="chart-title">User Activity</div>
+                    <div class="mockup-btn">Export Report</div>
+                  </div>
+                  <div class="chart-body">
+                    <!-- CSS Bar Chart Mockup -->
+                    <div class="chart-bar" style="height: 40%"></div>
+                    <div class="chart-bar" style="height: 70%"></div>
+                    <div class="chart-bar" style="height: 50%"></div>
+                    <div class="chart-bar" style="height: 90%"></div>
+                    <div class="chart-bar" style="height: 60%"></div>
+                    <div class="chart-bar" style="height: 80%"></div>
+                    <div class="chart-bar" style="height: 100%"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body" id="modal-body" style="padding: 0; max-height: none; overflow: visible;">
+        
+        <!-- Live Customizer Editor -->
+        <div class="modal-section live-customizer-section" id="live-customizer-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 class="modal-section-title" style="margin-bottom: 0;">
+              <span class="section-icon">🎛️</span> Live Customizer
+            </h3>
+            <div style="display:flex; gap: 8px;">
+              <button id="btn-invert-theme" style="background:var(--site-surface-2); border:1px solid var(--site-border); padding:6px 12px; border-radius:6px; color:var(--site-text); font-weight:600; cursor:pointer; font-size:0.85rem; transition:0.2s;">🌗 Invert</button>
+              <button id="btn-sandbox" style="background:linear-gradient(135deg, #3b82f6, #8b5cf6); border:none; padding:6px 12px; border-radius:6px; color:#fff; font-weight:bold; cursor:pointer; font-size:0.85rem; transition:0.2s;">🚀 Sandbox</button>
+            </div>
+          </div>
+          <div class="customizer-grid">
+            <div class="customizer-group">
+              <label>Primary Color</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="edit-color-primary" />
+                <span class="color-hex" id="hex-color-primary">#000000</span>
+              </div>
+            </div>
+            <div class="customizer-group">
+              <label>Secondary Color</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="edit-color-secondary" />
+                <span class="color-hex" id="hex-color-secondary">#000000</span>
+              </div>
+            </div>
+            <div class="customizer-group">
+              <label>Accent Color</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="edit-color-accent" />
+                <span class="color-hex" id="hex-color-accent">#000000</span>
+              </div>
+            </div>
+            <div class="customizer-group">
+              <label>Background</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="edit-color-background" />
+                <span class="color-hex" id="hex-color-background">#000000</span>
+              </div>
+            </div>
+            <div class="customizer-group">
+              <label>Surface</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="edit-color-surface" />
+                <span class="color-hex" id="hex-color-surface">#000000</span>
+              </div>
+            </div>
+            <div class="customizer-group">
+              <label>Text Color</label>
+              <div class="color-picker-wrap">
+                <input type="color" id="edit-color-text" />
+                <span class="color-hex" id="hex-color-text">#0f172a</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- a11y Contrast Score -->
+          <div style="margin-top: 20px; padding: 14px; border-radius: 12px; background: color-mix(in srgb, var(--site-surface) 50%, transparent); border: 1px solid var(--site-border); display:flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="font-size: 0.85rem; font-weight: bold; color: var(--site-text); display:block;">WCAG 2.1 Contrast (Text / Background)</span>
+              <span id="contrast-ratio" style="font-family: monospace; font-size: 1.4rem; font-weight: 800; color: var(--site-text);">--</span>
+            </div>
+            <span id="contrast-badge" class="preview-badge" style="padding: 6px 14px; border-radius: 20px; font-weight: bold;">--</span>
+          </div>
+          
+          <div class="customizer-group" style="margin-top: 24px;">
+              <label>Border Radius (<span id="val-border-radius">12px</span>)</label>
+              <input type="range" id="edit-border-radius" min="0" max="40" value="12" />
+            </div>
+            <div class="customizer-group slider-group">
+              <label>Border Width (<span id="val-border-width">1px</span>)</label>
+              <input type="range" id="edit-border-width" min="0" max="8" value="1" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="modal-section" id="modal-palette-section">
+          <h3 class="modal-section-title">
+            <span class="section-icon">🎨</span> Original Palette
+          </h3>
+          <div class="palette-grid" id="palette-grid"></div>
+        </div>
+
+        <!-- Typography -->
+        <div class="modal-section" id="modal-typography-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+            <h3 class="modal-section-title" style="margin-bottom: 0;">
+              <span class="section-icon">🔤</span> Typography
+            </h3>
+            <input type="text" id="typo-playground-input" placeholder="Type here to test typography..." style="background:var(--site-surface-2); border:1px solid var(--site-border); color:var(--site-text); padding:8px 12px; border-radius:6px; width:100%; max-width:300px; font-family:var(--font-inter); outline:none;" />
+          </div>
+          <div class="typography-preview" id="typography-preview"></div>
+        </div>
+
+        <!-- Component Preview -->
+        <div class="modal-section" id="modal-components-section">
+          <h3 class="modal-section-title">
+            <span class="section-icon">🧩</span> UI Components
+          </h3>
+          <div class="components-preview" id="components-preview"></div>
+        </div>
+
+        <!-- Design Properties -->
+        <div class="modal-section" id="modal-properties-section">
+          <h3 class="modal-section-title">
+            <span class="section-icon">⚙</span> Design Properties
+          </h3>
+          <div class="properties-grid" id="properties-grid"></div>
+        </div>
+
+        <!-- CSS Code & Export -->
+        <div class="modal-section" id="modal-code-section">
+          <div class="code-header">
+            <h3 class="modal-section-title" style="margin-bottom:0;">
+              <span class="section-icon">📋</span> Export Theme
+            </h3>
+            <div class="code-tabs">
+              <button class="code-tab active" data-tab="css">CSS</button>
+              <button class="code-tab" data-tab="tailwind">Tailwind</button>
+              <button class="code-tab" data-tab="react">⚛️ React</button>
+              <button class="code-tab" data-tab="html">📄 Template</button>
+              <button class="code-tab" data-tab="bookmarklet">🔖 Bookmarklet</button>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="copy-code-btn" id="btn-share-link" style="background:var(--site-surface-2); color:var(--site-text); border-color:var(--site-border);">🔗 Share Link</button>
+              <button class="copy-code-btn" id="btn-download-zip" style="background:#4ade80; color:#0f172a; border-color:#4ade80;">📦 .ZIP</button>
+              <button class="copy-code-btn" id="copy-code-btn">Copy Code</button>
+            </div>
+          </div>
+          <div class="code-blocks-wrapper">
+            <pre class="code-block active-block" id="block-css"><code id="css-code-output"></code></pre>
+            <pre class="code-block" id="block-tailwind"><code id="tailwind-code-output"></code></pre>
+            <pre class="code-block" id="block-react"><code id="react-code-output"></code></pre>
+            <pre class="code-block" id="block-html"><code id="html-code-output"></code></pre>
+            <div class="code-block" id="block-bookmarklet" style="padding:24px; text-align:center;">
+              <h4 style="margin-bottom: 12px; font-family: var(--font-heading); color: var(--site-text);">Magic Injector</h4>
+              <p style="font-size:0.9rem; opacity:0.8; margin-bottom: 16px;">Drag the button below to your browser's Bookmark Bar. Click it on any website to inject this theme!</p>
+              <a href="#" id="bookmarklet-link" style="display:inline-block; background:linear-gradient(135deg, #a855f7, #ec4899); color:#fff; padding:12px 24px; border-radius:30px; font-weight:bold; text-decoration:none; box-shadow: 0 4px 14px rgba(236,72,153,0.4);">Inject AUDIRA</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer" id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-icon">✦</span>
+        <span>AUDIRA THEMA</span>
+      </div>
+      <p class="footer-text">Crafted with care. Explore, preview, and build beautiful interfaces.</p>
+    </div>
+  </footer>
+
+  <!-- ========== TOAST ========== -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span class="toast-text" id="toast-text">Copied!</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="js/themes.js?v=6"></script>
+  <script src="js/theme-page.js?v=2"></script>
+</body>
+</html>
