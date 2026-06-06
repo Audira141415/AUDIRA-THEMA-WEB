@@ -7,7 +7,13 @@ const dom = {
   searchInput: document.getElementById('search-input'),
   filterPills: document.getElementById('filter-pills'),
   noResults: document.getElementById('no-results'),
-  modeToggle: document.getElementById('mode-toggle')
+  modeToggle: document.getElementById('mode-toggle'),
+  toast: document.getElementById('toast'),
+  toastText: document.getElementById('toast-text'),
+  btnMagicOpen: document.getElementById('btn-magic-open'),
+  btnMagicClose: document.getElementById('btn-magic-close'),
+  magicModal: document.getElementById('magic-modal-overlay'),
+  btnExecuteMagic: document.getElementById('btn-magic-execute')
 };
 
 // ─── STATE ───
@@ -76,6 +82,8 @@ function renderThemeCards(themeList) {
     card.setAttribute('tabindex', '0');
     card.setAttribute('aria-label', `View ${theme.name} theme details`);
 
+    card.style.setProperty('--glow-color', theme.colors.primary);
+
     const colorDots = Object.entries(theme.colors)
       .filter(([key]) => key !== 'text')
       .map(([, value]) => `<div class="card-color-dot" style="background:${value}"></div>`)
@@ -87,10 +95,104 @@ function renderThemeCards(themeList) {
 
     const favIcon = isFav ? `<div style="position: absolute; top: 12px; right: 12px; background: #ff4757; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 14px; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">❤️</div>` : '';
 
+    const mockupHTML = `
+      <div class="mini-mockup" style="
+        background: ${theme.colors.background};
+        color: ${theme.colors.text};
+        border: ${theme.properties.borderWidth} solid ${theme.properties.borderColor || 'rgba(255,255,255,0.08)'};
+        border-radius: ${theme.properties.borderRadius};
+        box-shadow: ${theme.properties.shadowOffset ? theme.properties.shadowOffset + ' ' + theme.properties.shadowColor : 'none'};
+        width: 100%;
+        height: 100%;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-align: left;
+      ">
+        <!-- Mockup Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid ${theme.properties.borderColor || 'rgba(255,255,255,0.08)'}; padding-bottom: 6px; margin-bottom: 4px;">
+          <div style="font-family: ${theme.typography.headingFont}; color: ${theme.colors.text}; font-size: 1rem; font-weight: ${theme.typography.headingWeight || '800'}; letter-spacing: -0.5px; line-height: 1;">Aa</div>
+          <div style="display: flex; gap: 4px;">
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${theme.colors.primary};"></span>
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${theme.colors.secondary};"></span>
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${theme.colors.accent};"></span>
+          </div>
+        </div>
+        
+        <!-- Mockup Body -->
+        <div style="display: flex; flex-direction: column; gap: 8px; flex: 1; justify-content: center;">
+          <!-- Row 1: Button and Badge -->
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; width: 100%;">
+            <button style="
+              background: ${theme.colors.primary};
+              color: ${theme.btnText || '#ffffff'};
+              border: ${theme.properties.borderWidth} solid ${theme.properties.borderColor || 'transparent'};
+              border-radius: ${theme.properties.borderRadius};
+              padding: 4px 8px;
+              font-size: 0.6rem;
+              font-weight: 700;
+              font-family: ${theme.typography.bodyFont};
+              box-shadow: ${theme.properties.shadowOffset ? '0 2px 5px ' + theme.properties.shadowColor : 'none'};
+              cursor: pointer;
+              line-height: 1.2;
+              white-space: nowrap;
+            ">Button</button>
+            
+            <span style="
+              background: ${theme.colors.accent}18;
+              color: ${theme.colors.accent};
+              border: 1px solid ${theme.colors.accent}30;
+              border-radius: 100px;
+              padding: 2px 6px;
+              font-size: 0.55rem;
+              font-weight: 700;
+              font-family: ${theme.typography.bodyFont};
+              white-space: nowrap;
+            ">Badge</span>
+          </div>
+          
+          <!-- Row 2: Input and Progress -->
+          <div style="display: flex; align-items: center; gap: 6px; justify-content: space-between; width: 100%;">
+            <div style="
+              flex: 1;
+              background: ${theme.colors.surface};
+              border: ${theme.properties.borderWidth} solid ${theme.properties.borderColor || 'transparent'};
+              border-radius: ${theme.properties.borderRadius};
+              padding: 4px 8px;
+              color: ${theme.colors.text}80;
+              font-size: 0.55rem;
+              font-family: ${theme.typography.bodyFont};
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            ">Input...</div>
+            
+            <!-- Progress Tracker -->
+            <div style="
+              width: 32px;
+              height: 5px;
+              background: ${theme.colors.surface};
+              border: 1px solid ${theme.properties.borderColor || 'transparent'};
+              border-radius: 10px;
+              overflow: hidden;
+              flex-shrink: 0;
+            ">
+              <div style="width: 70%; height: 100%; background: ${theme.colors.secondary}; border-radius: 10px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
     card.innerHTML = `
-      <div class="card-preview">
+      <div class="card-preview" style="background: ${theme.colors.background};">
         ${favIcon}
-        ${theme.extraCardHTML || ''}
+        <div class="card-preview-inner" style="width: 100%; height: 100%; padding: 8px; background: linear-gradient(135deg, ${theme.colors.primary}12, ${theme.colors.secondary}12); border: none; box-shadow: none; display: flex; align-items: center; justify-content: center;">
+          ${mockupHTML}
+        </div>
       </div>
       <div class="card-body">
         <h3 class="card-name">${theme.name}</h3>

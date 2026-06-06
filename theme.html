@@ -6,12 +6,22 @@
   <title>AUDIRA THEMA — Theme Details</title>
   <meta name="description" content="Explore theme details, colors, and typography." />
   
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
+
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:title" content="AUDIRA THEMA — Interactive Theme Customizer" />
+  <meta property="og:description" content="Experiment with colors, typography, and UI layouts live on the AUDIRA THEMA playground." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Righteous&family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
   
-  <link rel="stylesheet" href="css/styles.css?v=6" />
+  <link rel="stylesheet" href="css/styles.css?v=100" />
 </head>
 <body>
 
@@ -43,29 +53,52 @@
 
       <div class="modal-header" id="modal-header" style="position: relative;">
         <div class="modal-badge" id="modal-badge"></div>
-        <button class="btn-favorite" id="btn-favorite" title="Save to Favorites">
-          <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-          <span class="favorite-text">Save Theme</span>
-        </button>
+        <div style="position: absolute; top: 0; right: 0; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <button class="btn-favorite" id="btn-favorite" title="Save to Favorites">
+            <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <span class="favorite-text">Save Theme</span>
+          </button>
+          <button class="btn-customize" id="btn-customize" title="Customize Theme Colors">
+            <span class="customize-icon">🎨</span>
+            <span class="customize-text">Edit Colors</span>
+          </button>
+        </div>
         <h1 class="modal-title" id="modal-title" style="font-size: clamp(2rem, 5vw, 3.5rem); margin-top: 16px;">Loading...</h1>
         <p class="modal-description" id="modal-description"></p>
       </div>
 
       <!-- PREMIUM DASHBOARD SHOWCASE HERO -->
       <div class="theme-showcase-container" id="theme-showcase">
-        <div class="dashboard-mockup">
+        <!-- Showcase Toolbar -->
+        <div class="showcase-toolbar">
+          <div class="device-switcher">
+            <button class="device-btn active" data-device="desktop" title="Desktop View">🖥️ Desktop</button>
+            <button class="device-btn" data-device="tablet" title="Tablet View">📱 Tablet</button>
+            <button class="device-btn" data-device="mobile" title="Mobile View">📱 Mobile</button>
+          </div>
+          <div class="template-switcher">
+            <label for="template-select">Layout:</label>
+            <select id="template-select" class="toolbar-select">
+              <option value="dashboard">📊 Dashboard</option>
+              <option value="landing">🚀 Landing Page</option>
+              <option value="portfolio">💼 Portfolio/Blog</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="dashboard-mockup" id="dashboard-mockup">
           
           <!-- macOS Window Controls -->
           <div class="mockup-header">
             <div class="mac-controls">
               <span></span><span></span><span></span>
             </div>
-            <div class="mockup-url-bar">dashboard.audira.thema</div>
+            <div class="mockup-url-bar" id="mockup-url-bar">dashboard.audira.thema</div>
             <div class="mockup-header-right"></div>
           </div>
 
           <!-- Dashboard Body -->
-          <div class="mockup-body">
+          <div class="mockup-body template-section active" id="mockup-body-dashboard">
             
             <!-- Sidebar -->
             <div class="mockup-sidebar">
@@ -116,7 +149,7 @@
                 <div class="mockup-chart-card">
                   <div class="chart-header">
                     <div class="chart-title">User Activity</div>
-                    <div class="mockup-btn">Export Report</div>
+                    <div class="mockup-btn" id="btn-mockup-export">Export Report</div>
                   </div>
                   <div class="chart-body">
                     <!-- CSS Bar Chart Mockup -->
@@ -133,6 +166,53 @@
 
             </div>
           </div>
+
+          <!-- Landing Page Body -->
+          <div class="mockup-body template-section" id="mockup-body-landing" style="display:none; flex-direction:column; overflow-y:auto;">
+            <div class="landing-header">
+              <div class="landing-logo">Startup.io</div>
+              <div class="landing-nav">
+                <span>Features</span><span>Pricing</span><span>Contact</span>
+              </div>
+              <button class="landing-btn" id="btn-landing-cta-header">Get Started</button>
+            </div>
+            <div class="landing-hero">
+              <h2 class="landing-title">Beautiful UI Themes For Your Next Idea</h2>
+              <p class="landing-subtitle">An elegant and premium set of component systems crafted to boost user conversions.</p>
+              <div class="landing-actions">
+                <button class="landing-btn" id="btn-landing-cta-hero">Try Free</button>
+                <button class="landing-btn-sec" id="btn-landing-sec">Learn More</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Portfolio/Blog Body -->
+          <div class="mockup-body template-section" id="mockup-body-portfolio" style="display:none; flex-direction:column; overflow-y:auto;">
+            <div class="blog-header">
+              <h2 class="blog-title">Minimalist DevLog</h2>
+              <p class="blog-tagline">Exploring modern design paradigms and client performance</p>
+            </div>
+            <div class="blog-grid">
+              <div class="blog-posts">
+                <div class="blog-post">
+                  <div class="blog-post-tag">TUTORIAL</div>
+                  <h3 class="blog-post-title">Mastering CSS Custom Properties</h3>
+                  <p class="blog-post-desc">Learn how to declare, modify, and dynamically transition variables in complex dashboards...</p>
+                </div>
+                <div class="blog-post">
+                  <div class="blog-post-tag">ESTHETICS</div>
+                  <h3 class="blog-post-title">Why Brutalism is Back</h3>
+                  <p class="blog-post-desc">Analyzing the impact of heavy borders, off-grid alignments, and solid shadow offsets...</p>
+                </div>
+              </div>
+              <div class="blog-sidebar">
+                <div class="blog-avatar"></div>
+                <h4 class="blog-sidebar-title">About Creator</h4>
+                <p class="blog-sidebar-text">Senior Frontend Engineer writing cleaner UI design guides.</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -260,6 +340,8 @@
               <button class="code-tab" data-tab="tailwind">Tailwind</button>
               <button class="code-tab" data-tab="react">⚛️ React</button>
               <button class="code-tab" data-tab="html">📄 Template</button>
+              <button class="code-tab" data-tab="figma">💎 Figma Tokens</button>
+              <button class="code-tab" data-tab="scss">🎨 SCSS</button>
               <button class="code-tab" data-tab="bookmarklet">🔖 Bookmarklet</button>
             </div>
             <div style="display:flex; gap:8px;">
@@ -269,10 +351,12 @@
             </div>
           </div>
           <div class="code-blocks-wrapper">
-            <pre class="code-block active-block" id="block-css"><code id="css-code-output"></code></pre>
+            <pre class="code-block active-block" id="block-css"><code id="css-code-output" contenteditable="true" spellcheck="false" title="Click to edit CSS variables directly!"></code></pre>
             <pre class="code-block" id="block-tailwind"><code id="tailwind-code-output"></code></pre>
             <pre class="code-block" id="block-react"><code id="react-code-output"></code></pre>
             <pre class="code-block" id="block-html"><code id="html-code-output"></code></pre>
+            <pre class="code-block" id="block-figma"><code id="figma-code-output"></code></pre>
+            <pre class="code-block" id="block-scss"><code id="scss-code-output"></code></pre>
             <div class="code-block" id="block-bookmarklet" style="padding:24px; text-align:center;">
               <h4 style="margin-bottom: 12px; font-family: var(--font-heading); color: var(--site-text);">Magic Injector</h4>
               <p style="font-size:0.9rem; opacity:0.8; margin-bottom: 16px;">Drag the button below to your browser's Bookmark Bar. Click it on any website to inject this theme!</p>
@@ -302,9 +386,130 @@
     <span class="toast-text" id="toast-text">Copied!</span>
   </div>
 
+  <!-- ========== LIVE CUSTOMIZER SIDE PANEL ========== -->
+  <div class="customizer-panel" id="customizer-panel">
+    <div class="customizer-header">
+      <h3>🎨 Customize Theme Colors</h3>
+      <button class="customizer-close" id="btn-customizer-close">×</button>
+    </div>
+    <div class="customizer-body">
+      <p style="font-size: 0.82rem; opacity: 0.7; margin-bottom: 20px; line-height: 1.4; color: var(--site-text-muted);">Tweak colors live and see components adapt instantly. Copy the updated code below when satisfied!</p>
+      
+      <div class="customizer-field">
+        <label for="picker-primary" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">Primary Color</label>
+        <div class="picker-row" style="display:flex; gap:10px; align-items:center; margin-bottom:16px;">
+          <input type="color" id="picker-primary" style="width:40px; height:36px; border:none; border-radius:6px; cursor:pointer; background:none;">
+          <input type="text" id="hex-primary" readonly style="flex:1; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:'Space Mono', monospace; font-size:0.85rem; outline:none;">
+        </div>
+      </div>
+      
+      <div class="customizer-field">
+        <label for="picker-secondary" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">Secondary Color</label>
+        <div class="picker-row" style="display:flex; gap:10px; align-items:center; margin-bottom:16px;">
+          <input type="color" id="picker-secondary" style="width:40px; height:36px; border:none; border-radius:6px; cursor:pointer; background:none;">
+          <input type="text" id="hex-secondary" readonly style="flex:1; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:'Space Mono', monospace; font-size:0.85rem; outline:none;">
+        </div>
+      </div>
+      
+      <div class="customizer-field">
+        <label for="picker-accent" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">Accent Color</label>
+        <div class="picker-row" style="display:flex; gap:10px; align-items:center; margin-bottom:16px;">
+          <input type="color" id="picker-accent" style="width:40px; height:36px; border:none; border-radius:6px; cursor:pointer; background:none;">
+          <input type="text" id="hex-accent" readonly style="flex:1; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:'Space Mono', monospace; font-size:0.85rem; outline:none;">
+        </div>
+      </div>
+      
+      <div class="customizer-field">
+        <label for="picker-background" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">Background Color</label>
+        <div class="picker-row" style="display:flex; gap:10px; align-items:center; margin-bottom:16px;">
+          <input type="color" id="picker-background" style="width:40px; height:36px; border:none; border-radius:6px; cursor:pointer; background:none;">
+          <input type="text" id="hex-background" readonly style="flex:1; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:'Space Mono', monospace; font-size:0.85rem; outline:none;">
+        </div>
+      </div>
+      
+      <div class="customizer-field">
+        <label for="picker-surface" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">Surface Color</label>
+        <div class="picker-row" style="display:flex; gap:10px; align-items:center; margin-bottom:16px;">
+          <input type="color" id="picker-surface" style="width:40px; height:36px; border:none; border-radius:6px; cursor:pointer; background:none;">
+          <input type="text" id="hex-surface" readonly style="flex:1; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:'Space Mono', monospace; font-size:0.85rem; outline:none;">
+        </div>
+      </div>
+      
+      <div class="customizer-field">
+        <label for="picker-text" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">Text Color</label>
+        <div class="picker-row" style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
+          <input type="color" id="picker-text" style="width:40px; height:36px; border:none; border-radius:6px; cursor:pointer; background:none;">
+          <input type="text" id="hex-text" readonly style="flex:1; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:'Space Mono', monospace; font-size:0.85rem; outline:none;">
+        </div>
+      </div>
+
+      <!-- Cross-Breeding Selector -->
+      <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px;">
+        <label for="crossbreed-select" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">🧬 Cross-Breed With</label>
+        <select id="crossbreed-select" style="width:100%; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:var(--font-inter); font-size:0.85rem; outline:none; cursor:pointer;">
+          <option value="">-- Choose Theme --</option>
+        </select>
+      </div>
+
+      <!-- Google Fonts Selection -->
+      <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px;">
+        <label for="font-picker-heading" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">🔤 Heading Font</label>
+        <select id="font-picker-heading" style="width:100%; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:var(--font-inter); font-size:0.85rem; outline:none; cursor:pointer; margin-bottom:8px;">
+          <option value="Outfit">Outfit</option>
+          <option value="Inter">Inter</option>
+          <option value="Poppins">Poppins</option>
+          <option value="Space Mono">Space Mono</option>
+          <option value="Orbitron">Orbitron</option>
+          <option value="Righteous">Righteous</option>
+          <option value="Lora">Lora</option>
+          <option value="Playfair Display">Playfair Display</option>
+          <option value="Quicksand">Quicksand</option>
+        </select>
+        <label for="font-picker-body" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">🔤 Body Font</label>
+        <select id="font-picker-body" style="width:100%; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:var(--font-inter); font-size:0.85rem; outline:none; cursor:pointer;">
+          <option value="Inter">Inter</option>
+          <option value="Outfit">Outfit</option>
+          <option value="Poppins">Poppins</option>
+          <option value="Nunito">Nunito</option>
+          <option value="Lora">Lora</option>
+          <option value="Quicksand">Quicksand</option>
+        </select>
+      </div>
+
+      <!-- Style Presets Grid -->
+      <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px;">
+        <label style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:8px; color:var(--site-text-muted);">⚡ Style Presets</label>
+        <div class="preset-buttons-grid" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; margin-bottom:12px;">
+          <button class="btn-preset" data-preset="brutalist">Brutalist</button>
+          <button class="btn-preset" data-preset="soft">Soft/Rounded</button>
+          <button class="btn-preset" data-preset="glass">Glassmorphic</button>
+          <button class="btn-preset" data-preset="dark">Dark Mode Var</button>
+        </div>
+      </div>
+
+      <!-- Contrast Optimizer Info / Trigger -->
+      <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px;">
+        <button class="btn-reset-customizer" id="btn-autofix-contrast" style="width:100%; padding:10px; background:linear-gradient(135deg, #10b981, #059669); color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:0.85rem; transition:0.3s; margin-bottom:16px;">⚡ Auto-Fix Contrast</button>
+      </div>
+
+      <!-- Audio Effects Toggle -->
+      <div class="customizer-field" style="margin-top: 12px; border-top: 1px solid var(--site-border); padding-top: 12px; margin-bottom: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <label for="toggle-sfx" style="font-size:0.8rem; font-weight:600; color:var(--site-text-muted); cursor:pointer;">🔊 Tactile Sounds</label>
+          <label class="preview-toggle" style="transform:scale(0.85); transform-origin:right;">
+            <input type="checkbox" id="toggle-sfx" checked>
+            <span class="preview-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <button class="btn-reset-customizer" id="btn-reset-customizer" style="width:100%; padding:12px; background:var(--site-surface-2); border:1px solid var(--site-border); color:var(--site-text); border-radius:8px; font-weight:600; cursor:pointer; font-size:0.9rem; transition:0.3s;">Reset Colors</button>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="js/themes.js?v=6"></script>
-  <script src="js/theme-page.js?v=2"></script>
+  <script src="js/theme-page.js?v=100"></script>
 </body>
 </html>

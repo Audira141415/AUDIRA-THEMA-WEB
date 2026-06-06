@@ -1,53 +1,66 @@
 // ─── THEME PAGE LOGIC ───
 
 const dom = {
-  themePageContainer: document.getElementById('theme-page-container'),
-  modalBadge: document.getElementById('modal-badge'),
-  modalTitle: document.getElementById('modal-title'),
-  modalDescription: document.getElementById('modal-description'),
-  paletteGrid: document.getElementById('palette-grid'),
-  typographyPreview: document.getElementById('typography-preview'),
-  componentsPreview: document.getElementById('components-preview'),
-  propertiesGrid: document.getElementById('properties-grid'),
+  get themePageContainer() { return document.getElementById('theme-page-container'); },
+  get modalBadge() { return document.getElementById('modal-badge'); },
+  get modalTitle() { return document.getElementById('modal-title'); },
+  get modalDescription() { return document.getElementById('modal-description'); },
+  get paletteGrid() { return document.getElementById('palette-grid'); },
+  get typographyPreview() { return document.getElementById('typography-preview'); },
+  get componentsPreview() { return document.getElementById('components-preview'); },
+  get propertiesGrid() { return document.getElementById('properties-grid'); },
   
   // Customizer
-  editPrimary: document.getElementById('edit-color-primary'),
-  editSecondary: document.getElementById('edit-color-secondary'),
-  editAccent: document.getElementById('edit-color-accent'),
-  editBackground: document.getElementById('edit-color-background'),
-  editSurface: document.getElementById('edit-color-surface'),
-  editText: document.getElementById('edit-color-text'),
-  editRadius: document.getElementById('edit-border-radius'),
-  editWidth: document.getElementById('edit-border-width'),
+  get editPrimary() { return document.getElementById('edit-color-primary'); },
+  get editSecondary() { return document.getElementById('edit-color-secondary'); },
+  get editAccent() { return document.getElementById('edit-color-accent'); },
+  get editBackground() { return document.getElementById('edit-color-background'); },
+  get editSurface() { return document.getElementById('edit-color-surface'); },
+  get editText() { return document.getElementById('edit-color-text'); },
+  get editRadius() { return document.getElementById('edit-border-radius'); },
+  get editWidth() { return document.getElementById('edit-border-width'); },
 
   // Code Export
-  cssCodeOutput: document.getElementById('css-code-output'),
-  tailwindCodeOutput: document.getElementById('tailwind-code-output'),
-  reactCodeOutput: document.getElementById('react-code-output'),
-  htmlCodeOutput: document.getElementById('html-code-output'),
-  blockCss: document.getElementById('block-css'),
-  blockTailwind: document.getElementById('block-tailwind'),
-  blockReact: document.getElementById('block-react'),
-  blockHtml: document.getElementById('block-html'),
-  blockBookmarklet: document.getElementById('block-bookmarklet'),
-  codeTabs: document.querySelectorAll('.code-tab'),
-  copyCodeBtn: document.getElementById('copy-code-btn'),
-  btnDownloadZip: document.getElementById('btn-download-zip'),
-  btnShareLink: document.getElementById('btn-share-link'),
-  bookmarkletLink: document.getElementById('bookmarklet-link'),
+  get cssCodeOutput() { return document.getElementById('css-code-output'); },
+  get tailwindCodeOutput() { return document.getElementById('tailwind-code-output'); },
+  get reactCodeOutput() { return document.getElementById('react-code-output'); },
+  get htmlCodeOutput() { return document.getElementById('html-code-output'); },
+  get figmaCodeOutput() { return document.getElementById('figma-code-output'); },
+  get scssCodeOutput() { return document.getElementById('scss-code-output'); },
+  get blockCss() { return document.getElementById('block-css'); },
+  get blockTailwind() { return document.getElementById('block-tailwind'); },
+  get blockReact() { return document.getElementById('block-react'); },
+  get blockHtml() { return document.getElementById('block-html'); },
+  get blockFigma() { return document.getElementById('block-figma'); },
+  get blockScss() { return document.getElementById('block-scss'); },
+  get blockBookmarklet() { return document.getElementById('block-bookmarklet'); },
+  get codeTabs() { return document.querySelectorAll('.code-tab'); },
+  get copyCodeBtn() { return document.getElementById('copy-code-btn'); },
+  get btnDownloadZip() { return document.getElementById('btn-download-zip'); },
+  get btnShareLink() { return document.getElementById('btn-share-link'); },
+  get bookmarkletLink() { return document.getElementById('bookmarklet-link'); },
 
   // Misc
-  btnFavorite: document.getElementById('btn-favorite'),
-  btnInvertTheme: document.getElementById('btn-invert-theme'),
-  btnSandbox: document.getElementById('btn-sandbox'),
-  typoInput: document.getElementById('typo-playground-input'),
-  modeToggle: document.getElementById('mode-toggle'),
-  toast: document.getElementById('toast'),
-  toastText: document.getElementById('toast-text'),
+  get btnFavorite() { return document.getElementById('btn-favorite'); },
+  get btnInvertTheme() { return document.getElementById('btn-invert-theme'); },
+  get btnSandbox() { return document.getElementById('btn-sandbox'); },
+  get typoInput() { return document.getElementById('typo-playground-input'); },
+  get modeToggle() { return document.getElementById('mode-toggle'); },
+  get toast() { return document.getElementById('toast'); },
+  get toastText() { return document.getElementById('toast-text'); },
   
+  // Customizer Extension Inputs
+  get crossbreedSelect() { return document.getElementById('crossbreed-select'); },
+  get fontHeadingSelect() { return document.getElementById('font-picker-heading'); },
+  get fontBodySelect() { return document.getElementById('font-picker-body'); },
+  get btnAutofixContrast() { return document.getElementById('btn-autofix-contrast'); },
+  get toggleSfx() { return document.getElementById('toggle-sfx'); },
+  get templateSelect() { return document.getElementById('template-select'); },
+  get dashboardMockup() { return document.getElementById('dashboard-mockup'); },
+
   // a11y
-  contrastRatio: document.getElementById('contrast-ratio'),
-  contrastBadge: document.getElementById('contrast-badge')
+  get contrastRatio() { return document.getElementById('contrast-ratio'); },
+  get contrastBadge() { return document.getElementById('contrast-badge'); }
 };
 
 let activeTheme = null;
@@ -78,6 +91,19 @@ function init() {
   // Create a deep copy so we can edit it live
   activeTheme = JSON.parse(JSON.stringify(activeTheme));
   
+  // Populate crossbreed dropdown
+  if (dom.crossbreedSelect) {
+    dom.crossbreedSelect.innerHTML = '<option value="">-- Choose Theme --</option>';
+    themes.forEach(t => {
+      if (t.id !== activeTheme.id) {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = t.name;
+        dom.crossbreedSelect.appendChild(opt);
+      }
+    });
+  }
+
   document.title = activeTheme.name + ' — AUDIRA THEMA';
   renderThemeDetails(activeTheme);
   checkFavorite(activeTheme.id);
@@ -102,6 +128,7 @@ function renderThemeDetails(theme) {
   renderPalette(theme);
   renderTypography(theme);
   renderComponents(theme);
+  bindPlaygroundEvents();
   renderProperties(theme);
   updateCodeBlocks(theme);
 }
@@ -247,9 +274,9 @@ function renderComponents(theme) {
     <div class="preview-group">
       <div class="preview-group-label">Buttons</div>
       <div class="preview-buttons">
-        <div class="preview-btn preview-btn--primary">Primary</div>
-        <div class="preview-btn preview-btn--secondary">Secondary</div>
-        <div class="preview-btn preview-btn--outline">Outline</div>
+        <div class="preview-btn preview-btn--primary" id="btn-preview-primary">Primary</div>
+        <div class="preview-btn preview-btn--secondary" id="btn-preview-secondary">Secondary</div>
+        <div class="preview-btn preview-btn--outline" id="btn-preview-outline">Outline</div>
       </div>
     </div>
     
@@ -262,19 +289,22 @@ function renderComponents(theme) {
         <div class="preview-group-label">Toggle & Badges</div>
         <div style="display:flex; align-items:center; gap: 16px;">
           <label class="preview-toggle">
-            <input type="checkbox" checked>
+            <input type="checkbox" id="preview-toggle-input" checked>
             <span class="preview-slider"></span>
           </label>
-          <span class="preview-badge">Active</span>
+          <span class="preview-badge" id="preview-status-badge">Active</span>
           <span class="preview-badge accent">New</span>
         </div>
       </div>
     </div>
 
     <div class="preview-group">
-      <div class="preview-group-label">Progress Bar</div>
+      <div class="preview-group-label" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>Progress Bar</span>
+        <input type="range" id="progress-slider" min="0" max="100" value="70" style="width: 80px; accent-color: var(--preview-primary); cursor: pointer;">
+      </div>
       <div class="preview-progress-container">
-        <div class="preview-progress-bar"></div>
+        <div class="preview-progress-bar" id="preview-progress-bar" style="width: 70%;"></div>
       </div>
     </div>
 
@@ -288,7 +318,7 @@ function renderComponents(theme) {
         </div>
       </div>
     </div>
-    </div>
+
     <div class="preview-group">
       <div class="preview-group-label">Badges</div>
       <div class="preview-badges">
@@ -298,6 +328,46 @@ function renderComponents(theme) {
       </div>
     </div>
   `;
+}
+
+function bindPlaygroundEvents() {
+  const slider = document.getElementById('progress-slider');
+  const bar = document.getElementById('preview-progress-bar');
+  if (slider && bar) {
+    slider.addEventListener('input', (e) => {
+      bar.style.width = e.target.value + '%';
+    });
+  }
+
+  const toggle = document.getElementById('preview-toggle-input');
+  const badge = document.getElementById('preview-status-badge');
+  if (toggle && badge) {
+    toggle.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        badge.textContent = 'Active';
+        badge.style.opacity = '1';
+        badge.style.background = 'color-mix(in srgb, var(--preview-secondary) 15%, transparent)';
+        badge.style.color = 'var(--preview-secondary)';
+      } else {
+        badge.textContent = 'Inactive';
+        badge.style.opacity = '0.5';
+        badge.style.background = 'rgba(255,255,255,0.05)';
+        badge.style.color = 'var(--site-text-muted)';
+      }
+    });
+  }
+
+  const btnPrimary = document.getElementById('btn-preview-primary');
+  const btnSecondary = document.getElementById('btn-preview-secondary');
+  const btnOutline = document.getElementById('btn-preview-outline');
+
+  const handleBtnClick = (name) => {
+    showToast(`${name} Button Clicked! 🚀`);
+  };
+
+  if (btnPrimary) btnPrimary.addEventListener('click', () => handleBtnClick('Primary'));
+  if (btnSecondary) btnSecondary.addEventListener('click', () => handleBtnClick('Secondary'));
+  if (btnOutline) btnOutline.addEventListener('click', () => handleBtnClick('Outline'));
 }
 
 function renderProperties(theme) {
@@ -510,11 +580,48 @@ export const Input = (props) => (
 </body>
 </html>`;
 
+  // Figma design tokens format
+  const figmaTokensObj = {
+    "colors": {
+      "primary": { "value": theme.colors.primary, "type": "color" },
+      "secondary": { "value": theme.colors.secondary, "type": "color" },
+      "accent": { "value": theme.colors.accent, "type": "color" },
+      "background": { "value": theme.colors.background, "type": "color" },
+      "surface": { "value": theme.colors.surface, "type": "color" },
+      "text": { "value": theme.colors.text, "type": "color" }
+    },
+    "typography": {
+      "headingFont": { "value": theme.typography.headingFont, "type": "fontFamily" },
+      "bodyFont": { "value": theme.typography.bodyFont, "type": "fontFamily" }
+    },
+    "properties": {
+      "borderRadius": { "value": theme.properties.borderRadius, "type": "dimension" },
+      "borderWidth": { "value": theme.properties.borderWidth, "type": "dimension" },
+      "borderColor": { "value": theme.properties.borderColor || 'rgba(0,0,0,0.1)', "type": "color" }
+    }
+  };
+
+  // SCSS Format
+  const scssCode = `$theme-primary: ${theme.colors.primary};
+$theme-secondary: ${theme.colors.secondary};
+$theme-accent: ${theme.colors.accent};
+$theme-background: ${theme.colors.background};
+$theme-surface: ${theme.colors.surface};
+$theme-text: ${theme.colors.text};
+
+$theme-radius: ${theme.properties.borderRadius};
+$theme-border-width: ${theme.properties.borderWidth};
+$theme-border-color: ${theme.properties.borderColor || 'rgba(0,0,0,0.1)'};
+$theme-font-heading: ${theme.typography.headingFont};
+$theme-font-body: ${theme.typography.bodyFont};`;
+
   // Populate code blocks
   if(dom.cssCodeOutput) dom.cssCodeOutput.textContent = cssCode;
   if(dom.tailwindCodeOutput) dom.tailwindCodeOutput.textContent = 'module.exports = ' + JSON.stringify(tailwindObj, null, 2) + ';';
   if(dom.reactCodeOutput) dom.reactCodeOutput.textContent = reactCode;
   if(dom.htmlCodeOutput) dom.htmlCodeOutput.textContent = htmlTemplateCode;
+  if(dom.figmaCodeOutput) dom.figmaCodeOutput.textContent = JSON.stringify(figmaTokensObj, null, 2);
+  if(dom.scssCodeOutput) dom.scssCodeOutput.textContent = scssCode;
 
   // Bookmarklet
   const bookmarkletCode = `javascript:(function(){
@@ -798,6 +905,91 @@ function handleCustomizerInput(e) {
 }
 
 function bindEvents() {
+  // Live Customizer Sidebar Panel Toggle
+  const btnCustomize = document.getElementById('btn-customize');
+  const customizerPanel = document.getElementById('customizer-panel');
+  const btnCloseCustomizer = document.getElementById('btn-customizer-close');
+
+  if (btnCustomize && customizerPanel) {
+    btnCustomize.addEventListener('click', () => {
+      // Populate pickers with activeTheme colors
+      document.getElementById('picker-primary').value = activeTheme.colors.primary;
+      document.getElementById('hex-primary').value = activeTheme.colors.primary;
+
+      document.getElementById('picker-secondary').value = activeTheme.colors.secondary;
+      document.getElementById('hex-secondary').value = activeTheme.colors.secondary;
+
+      document.getElementById('picker-accent').value = activeTheme.colors.accent;
+      document.getElementById('hex-accent').value = activeTheme.colors.accent;
+
+      document.getElementById('picker-background').value = activeTheme.colors.background;
+      document.getElementById('hex-background').value = activeTheme.colors.background;
+
+      document.getElementById('picker-surface').value = activeTheme.colors.surface;
+      document.getElementById('hex-surface').value = activeTheme.colors.surface;
+
+      document.getElementById('picker-text').value = activeTheme.colors.text;
+      document.getElementById('hex-text').value = activeTheme.colors.text;
+
+      customizerPanel.classList.add('active');
+    });
+  }
+
+  if (btnCloseCustomizer && customizerPanel) {
+    btnCloseCustomizer.addEventListener('click', () => {
+      customizerPanel.classList.remove('active');
+    });
+  }
+
+  // Handle color pickers in the sidebar
+  const pickers = [
+    { id: 'picker-primary', key: 'primary', hexId: 'hex-primary', inlinePickerId: 'edit-color-primary' },
+    { id: 'picker-secondary', key: 'secondary', hexId: 'hex-secondary', inlinePickerId: 'edit-color-secondary' },
+    { id: 'picker-accent', key: 'accent', hexId: 'hex-accent', inlinePickerId: 'edit-color-accent' },
+    { id: 'picker-background', key: 'background', hexId: 'hex-background', inlinePickerId: 'edit-color-background' },
+    { id: 'picker-surface', key: 'surface', hexId: 'hex-surface', inlinePickerId: 'edit-color-surface' },
+    { id: 'picker-text', key: 'text', hexId: 'hex-text', inlinePickerId: 'edit-color-text' }
+  ];
+
+  pickers.forEach(picker => {
+    const el = document.getElementById(picker.id);
+    const hexEl = document.getElementById(picker.hexId);
+    if (el) {
+      el.addEventListener('input', (e) => {
+        const color = e.target.value;
+        hexEl.value = color;
+        activeTheme.colors[picker.key] = color;
+        
+        // Also update the inline picker in the main customizer grid!
+        const inlinePicker = document.getElementById(picker.inlinePickerId);
+        if (inlinePicker) {
+          inlinePicker.value = color;
+          const inlineHex = document.getElementById('hex-color-' + picker.key);
+          if (inlineHex) inlineHex.textContent = color;
+        }
+
+        updateContainerStyles(activeTheme);
+        updateCodeBlocks(activeTheme);
+        renderPalette(activeTheme);
+      });
+    }
+  });
+
+  // Reset Colors in sidebar
+  const btnReset = document.getElementById('btn-reset-customizer');
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      // Find original theme from the main database
+      const original = themes.find(t => t.id === activeTheme.id) || themes[0];
+      activeTheme = JSON.parse(JSON.stringify(original));
+      renderThemeDetails(activeTheme);
+      showToast('Colors Reset! 🎨');
+      
+      // Close sidebar
+      if (customizerPanel) customizerPanel.classList.remove('active');
+    });
+  }
+
   // Favorites
   if (dom.btnFavorite) {
     dom.btnFavorite.addEventListener('click', toggleFavorite);
@@ -872,9 +1064,150 @@ function bindEvents() {
         copyToClipboard(dom.reactCodeOutput.textContent, 'React Code Copied!');
       } else if (activeTab === 'html') {
         copyToClipboard(dom.htmlCodeOutput.textContent, 'HTML Template Copied!');
+      } else if (activeTab === 'figma') {
+        copyToClipboard(dom.figmaCodeOutput.textContent, 'Figma Tokens Copied!');
+      } else if (activeTab === 'scss') {
+        copyToClipboard(dom.scssCodeOutput.textContent, 'SCSS Variables Copied!');
       }
     });
   }
+
+  // ─── Bind new premium features ───
+
+  // A. Device Frame Switcher
+  const deviceBtns = document.querySelectorAll('.device-btn');
+  if (deviceBtns && dom.dashboardMockup) {
+    deviceBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        playSound('click');
+        deviceBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const device = btn.getAttribute('data-device');
+        dom.dashboardMockup.className = 'dashboard-mockup'; // Reset device classes
+        dom.dashboardMockup.classList.add('device-' + device);
+      });
+    });
+  }
+
+  // B. Template Switcher
+  if (dom.templateSelect) {
+    dom.templateSelect.addEventListener('change', (e) => {
+      playSound('click');
+      const val = e.target.value;
+      
+      // Hide all templates
+      document.querySelectorAll('.mockup-body.template-section').forEach(section => {
+        section.style.display = 'none';
+        section.classList.remove('active');
+      });
+
+      // Show selected template
+      const activeSection = document.getElementById(`mockup-body-${val}`);
+      if (activeSection) {
+        activeSection.style.display = 'flex';
+        activeSection.classList.add('active');
+      }
+
+      // Update URL bar text accordingly
+      const urlBar = document.getElementById('mockup-url-bar');
+      if (urlBar) {
+        if (val === 'dashboard') urlBar.textContent = 'dashboard.audira.thema';
+        else if (val === 'landing') urlBar.textContent = 'startup.io/home';
+        else if (val === 'portfolio') urlBar.textContent = 'creativemind.dev';
+      }
+    });
+  }
+
+  // C. Google Fonts picker dropdowns
+  if (dom.fontHeadingSelect && activeTheme.typography && activeTheme.typography.headingFont) {
+    // Sync with activeTheme headingFont (take first font name and clean quotes)
+    const cleanFont = activeTheme.typography.headingFont.split(',')[0].replace(/['"]/g, '').trim();
+    dom.fontHeadingSelect.value = cleanFont;
+    dom.fontHeadingSelect.addEventListener('change', (e) => {
+      playSound('click');
+      const font = e.target.value;
+      loadGoogleFont(font);
+      activeTheme.typography.headingFont = `'${font}', sans-serif`;
+      updateContainerStyles(activeTheme);
+      updateCodeBlocks(activeTheme);
+      renderTypography(activeTheme);
+      renderProperties(activeTheme);
+    });
+  }
+
+  if (dom.fontBodySelect && activeTheme.typography && activeTheme.typography.bodyFont) {
+    // Sync with activeTheme bodyFont (take first font name and clean quotes)
+    const cleanFont = activeTheme.typography.bodyFont.split(',')[0].replace(/['"]/g, '').trim();
+    dom.fontBodySelect.value = cleanFont;
+    dom.fontBodySelect.addEventListener('change', (e) => {
+      playSound('click');
+      const font = e.target.value;
+      loadGoogleFont(font);
+      activeTheme.typography.bodyFont = `'${font}', sans-serif`;
+      updateContainerStyles(activeTheme);
+      updateCodeBlocks(activeTheme);
+      renderTypography(activeTheme);
+      renderProperties(activeTheme);
+    });
+  }
+
+  // D. Style Presets buttons
+  const presetBtns = document.querySelectorAll('.btn-preset');
+  if (presetBtns) {
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const preset = btn.getAttribute('data-preset');
+        applyPreset(preset);
+      });
+    });
+  }
+
+  // E. Autofix Contrast
+  if (dom.btnAutofixContrast) {
+    dom.btnAutofixContrast.addEventListener('click', autoFixContrast);
+  }
+
+  // F. Cross-breeding
+  if (dom.crossbreedSelect) {
+    dom.crossbreedSelect.addEventListener('change', (e) => {
+      const targetThemeId = e.target.value;
+      if (!targetThemeId) return;
+      playSound('chime');
+
+      const secondaryTheme = themes.find(t => t.id === targetThemeId);
+      if (!secondaryTheme) return;
+
+      // Blend current theme colors and target theme styles/typography
+      activeTheme.colors.primary = activeTheme.colors.primary; // Keep primary
+      activeTheme.colors.secondary = secondaryTheme.colors.secondary; // Blend secondary
+      activeTheme.colors.accent = activeTheme.colors.accent; // Keep accent
+      activeTheme.colors.background = secondaryTheme.colors.background; // Blend background
+      activeTheme.colors.surface = secondaryTheme.colors.surface; // Blend surface
+      activeTheme.colors.text = secondaryTheme.colors.text; // Blend text
+      
+      activeTheme.typography = JSON.parse(JSON.stringify(secondaryTheme.typography));
+      activeTheme.properties = JSON.parse(JSON.stringify(secondaryTheme.properties));
+
+      // Re-render Page
+      renderThemeDetails(activeTheme);
+      showToast(`Cross-Bred with ${secondaryTheme.name}! 🧬`);
+    });
+  }
+
+  // G. Live CSS Variable Editor Parser
+  if (dom.cssCodeOutput) {
+    dom.cssCodeOutput.addEventListener('input', () => {
+      parseCSSEditedVariables();
+    });
+    dom.cssCodeOutput.addEventListener('focus', () => playSound('click'));
+  }
+
+  // H. Sfx click ticks for inputs and checkboxes
+  const clickableElements = document.querySelectorAll('input[type="color"], input[type="range"], .preview-toggle input, .preview-btn, .nav-link, button');
+  clickableElements.forEach(el => {
+    el.addEventListener('click', () => playSound('click'));
+  });
 
   if (dom.modeToggle) {
     dom.modeToggle.addEventListener('click', toggleMode);
@@ -890,4 +1223,231 @@ function bindEvents() {
   }, { passive: true });
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// ─── EXTENDED PREMIUM INTERACTIVE FUNCTIONS ───
+
+// 1. Google Font Loader
+function loadGoogleFont(fontName) {
+  const id = 'gf-' + fontName.toLowerCase().replace(/ /g, '-');
+  if (!document.getElementById(id)) {
+    const link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/ /g, '+')}:wght@300;400;500;600;700;800;900&display=swap`;
+    document.head.appendChild(link);
+  }
+}
+
+// 2. Synthesized Sound Effects (Web Audio API)
+let audioCtx = null;
+function playSound(type = 'click') {
+  if (dom.toggleSfx && !dom.toggleSfx.checked) return;
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+
+    if (type === 'click') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1000, now);
+      osc.frequency.exponentialRampToValueAtTime(150, now + 0.04);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'chime') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(523.25, now); // C5
+      osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+      gain.gain.setValueAtTime(0.05, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+      osc.start(now);
+      osc.stop(now + 0.35);
+    }
+  } catch (e) {
+    console.warn('AudioContext failed:', e);
+  }
+}
+
+// 3. Contrast Optimizer (Auto-Fixer HSL)
+function autoFixContrast() {
+  if (!activeTheme) return;
+  playSound('chime');
+  
+  let bg = activeTheme.colors.background;
+  let text = activeTheme.colors.text;
+  let ratio = getContrastRatio(bg, text);
+
+  if (ratio >= 4.5) {
+    showToast('Contrast is already WCAG compliant! 🎉');
+    return;
+  }
+
+  const bgHsl = hexToHSL(bg);
+  const textHsl = hexToHSL(text);
+
+  let attempts = 0;
+  if (bgHsl.l < 50) {
+    while (ratio < 4.5 && attempts < 100) {
+      if (textHsl.l < 98) textHsl.l = Math.min(100, textHsl.l + 2);
+      if (bgHsl.l > 2) bgHsl.l = Math.max(0, bgHsl.l - 1);
+      
+      const newBg = HSLToHex(bgHsl.h, bgHsl.s, bgHsl.l);
+      const newText = HSLToHex(textHsl.h, textHsl.s, textHsl.l);
+      ratio = getContrastRatio(newBg, newText);
+      attempts++;
+    }
+  } else {
+    while (ratio < 4.5 && attempts < 100) {
+      if (textHsl.l > 2) textHsl.l = Math.max(0, textHsl.l - 2);
+      if (bgHsl.l < 98) bgHsl.l = Math.min(100, bgHsl.l + 1);
+      
+      const newBg = HSLToHex(bgHsl.h, bgHsl.s, bgHsl.l);
+      const newText = HSLToHex(textHsl.h, textHsl.s, textHsl.l);
+      ratio = getContrastRatio(newBg, newText);
+      attempts++;
+    }
+  }
+
+  activeTheme.colors.background = HSLToHex(bgHsl.h, bgHsl.s, bgHsl.l);
+  activeTheme.colors.text = HSLToHex(textHsl.h, textHsl.s, textHsl.l);
+
+  // Sync inputs
+  initCustomizerValues(activeTheme);
+  updateContainerStyles(activeTheme);
+  updateCodeBlocks(activeTheme);
+  renderPalette(activeTheme);
+  showToast('WCAG Contrast Fixed! ⚡');
+}
+
+// 4. Style Presets Applier
+function applyPreset(presetName) {
+  if (!activeTheme) return;
+  playSound('click');
+
+  document.querySelectorAll('.btn-preset').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.btn-preset[data-preset="${presetName}"]`);
+  if (btn) btn.classList.add('active');
+
+  const textHex = activeTheme.colors.text;
+
+  if (presetName === 'brutalist') {
+    activeTheme.properties.borderRadius = '0px';
+    activeTheme.properties.borderWidth = '3px';
+    activeTheme.properties.borderColor = textHex;
+    activeTheme.properties.shadowOffset = '4px 4px 0px';
+    showToast('Brutalist Preset Applied! 🖥️');
+  } else if (presetName === 'soft') {
+    activeTheme.properties.borderRadius = '24px';
+    activeTheme.properties.borderWidth = '1px';
+    activeTheme.properties.borderColor = 'color-mix(in srgb, ' + textHex + ' 15%, transparent)';
+    activeTheme.properties.shadowOffset = '0px 10px 30px';
+    showToast('Soft & Rounded Preset Applied! 🌸');
+  } else if (presetName === 'glass') {
+    activeTheme.colors.surface = 'rgba(255, 255, 255, 0.06)';
+    activeTheme.properties.borderRadius = '16px';
+    activeTheme.properties.borderWidth = '1px';
+    activeTheme.properties.borderColor = 'rgba(255, 255, 255, 0.12)';
+    activeTheme.properties.shadowOffset = '0px 20px 40px';
+    showToast('Glassmorphic Preset Applied! 💎');
+  } else if (presetName === 'dark') {
+    const bgHsl = hexToHSL(activeTheme.colors.background);
+    if (bgHsl.l > 40) {
+      activeTheme.colors.background = '#0b0f19';
+      activeTheme.colors.surface = '#161d2f';
+      activeTheme.colors.text = '#f8fafc';
+    } else {
+      activeTheme.colors.background = '#020617';
+      activeTheme.colors.surface = '#0f172a';
+      activeTheme.colors.text = '#f8fafc';
+    }
+    showToast('Dark Variant Applied! 🌗');
+  }
+
+  initCustomizerValues(activeTheme);
+  updateContainerStyles(activeTheme);
+  updateCodeBlocks(activeTheme);
+  renderProperties(activeTheme);
+}
+
+// 5. CSS Variable Editor Parser
+function parseCSSEditedVariables() {
+  if (!activeTheme || !dom.cssCodeOutput) return;
+  const content = dom.cssCodeOutput.innerText;
+  
+  const regex = /--([a-zA-Z0-9\-]+):\s*([^;]+);/g;
+  let match;
+  let updated = false;
+
+  while ((match = regex.exec(content)) !== null) {
+    const property = match[1].trim();
+    const value = match[2].trim();
+
+    if (property === 'primary') { activeTheme.colors.primary = value; updated = true; }
+    else if (property === 'secondary') { activeTheme.colors.secondary = value; updated = true; }
+    else if (property === 'accent') { activeTheme.colors.accent = value; updated = true; }
+    else if (property === 'background') { activeTheme.colors.background = value; updated = true; }
+    else if (property === 'surface') { activeTheme.colors.surface = value; updated = true; }
+    else if (property === 'text') { activeTheme.colors.text = value; updated = true; }
+    else if (property === 'radius') { activeTheme.properties.borderRadius = value; updated = true; }
+    else if (property === 'border-width') { activeTheme.properties.borderWidth = value; updated = true; }
+    else if (property === 'border-color') { activeTheme.properties.borderColor = value; updated = true; }
+  }
+
+  if (updated) {
+    updateContainerStyles(activeTheme);
+    initCustomizerValues(activeTheme);
+    renderPalette(activeTheme);
+    renderProperties(activeTheme);
+  }
+}
+
+// 6. Generate Magic Theme
+function generateMagicTheme(h, s, mode) {
+  const isDark = mode === 'dark';
+  
+  const h2 = (h + 30) % 360; 
+  const h3 = (h + 180) % 360;
+
+  const primary = HSLToHex(h, s, isDark ? 60 : 40);
+  const secondary = HSLToHex(h2, s, isDark ? 50 : 50);
+  const accent = HSLToHex(h3, s, isDark ? 65 : 45);
+  
+  const background = HSLToHex(h, s * 0.2, isDark ? 5 : 98);
+  const surface = HSLToHex(h, s * 0.3, isDark ? 10 : 100);
+  const text = HSLToHex(h, s * 0.1, isDark ? 95 : 10);
+  const border = HSLToHex(h, s * 0.4, isDark ? 20 : 90);
+
+  const id = 'magic-' + Math.random().toString(36).substr(2, 6);
+  
+  return {
+    id: id,
+    name: "Magic " + id.toUpperCase().slice(-4),
+    description: "An AI-generated theme using mathematically harmonious HSL equations.",
+    categories: ['generated', mode, 'modern'],
+    colors: { primary, secondary, accent, background, surface, text },
+    typography: {
+      headingFont: "'Inter', sans-serif", bodyFont: "'Inter', sans-serif",
+      headingWeight: "700", bodyWeight: "400"
+    },
+    properties: {
+      borderRadius: "16px", borderWidth: "1px", borderColor: border,
+      shadowOffset: "0 8px 30px", shadowColor: "rgba(0,0,0,0.1)"
+    }
+  };
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

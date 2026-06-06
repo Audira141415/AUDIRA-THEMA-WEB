@@ -16,7 +16,8 @@ window.URL.revokeObjectURL = () => {};
 window.navigator.clipboard = { writeText: async () => {} };
 
 try {
-  window.eval(jsThemes);
+  // Replace const themes with window.themes to expose it globally in JSDOM
+  window.eval(jsThemes.replace('const themes =', 'window.themes ='));
   window.eval(jsThemePage);
   console.log("THEME-PAGE.JS: Init successful, no crashes.");
   
