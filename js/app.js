@@ -39,7 +39,9 @@ function init() {
       btnGenerate.innerHTML = '<span class="btn-icon">⚡</span> Generating...';
       setTimeout(() => {
         const randomIndex = Math.floor(Math.random() * themes.length);
-        window.location.href = 'theme.html?id=' + themes[randomIndex].id;
+        const selectedId = themes[randomIndex].id;
+        localStorage.setItem('selected-theme-id', selectedId);
+        window.location.href = 'theme.html?id=' + selectedId;
       }, 500);
     });
   }
@@ -203,11 +205,13 @@ function renderThemeCards(themeList) {
     `;
 
     card.addEventListener('click', () => {
+      localStorage.setItem('selected-theme-id', theme.id);
       window.location.href = 'theme.html?id=' + theme.id;
     });
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        localStorage.setItem('selected-theme-id', theme.id);
         window.location.href = 'theme.html?id=' + theme.id;
       }
     });

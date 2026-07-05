@@ -2333,6 +2333,14 @@ html[data-mode="light"]
   display: none;
 }
 
+.dashboard-mockup.device-mobile #mockup-body-ecommerce .ecommerce-grid {
+  grid-template-columns: 1fr !important;
+}
+
+.dashboard-mockup.device-mobile #mockup-body-chat .chat-sidebar {
+  display: none !important;
+}
+
 /* Landing Page Mockup Body styling */
 #mockup-body-landing {
   background: var(--preview-background);
@@ -3526,6 +3534,49 @@ html[data-mode="light"] .customizer-panel {
   color: #fff !important;
   border-color: var(--site-primary) !important;
 }
+
+/* Dynamic Typography Scale & Weight Overrides */
+.dashboard-mockup {
+  --font-scale: var(--preview-font-scale, 1.25);
+  --heading-weight: var(--preview-heading-weight, 800);
+  --body-weight: var(--preview-body-weight, 400);
+}
+
+.mockup-title, 
+.landing-title, 
+.blog-title, 
+.blog-post-title, 
+.ecommerce-logo, 
+.product-info h4 {
+  font-weight: var(--preview-heading-weight, 800) !important;
+}
+
+.mockup-body, 
+.landing-subtitle, 
+.blog-post-desc, 
+.blog-sidebar-text, 
+.product-info,
+.chat-user-item,
+.message {
+  font-weight: var(--preview-body-weight, 400) !important;
+}
+
+.mockup-title {
+  font-size: calc(0.9rem * var(--preview-font-scale, 1.25) * var(--preview-font-scale, 1.25)) !important;
+}
+
+.landing-title {
+  font-size: calc(1.1rem * var(--preview-font-scale, 1.25) * var(--preview-font-scale, 1.25)) !important;
+}
+
+.blog-post-title {
+  font-size: calc(0.75rem * var(--preview-font-scale, 1.25) * var(--preview-font-scale, 1.25)) !important;
+}
+
+.ecommerce-logo {
+  font-size: calc(0.7rem * var(--preview-font-scale, 1.25) * var(--preview-font-scale, 1.25)) !important;
+}
+
 
 
 

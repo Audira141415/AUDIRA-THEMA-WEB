@@ -82,6 +82,8 @@
               <option value="dashboard">📊 Dashboard</option>
               <option value="landing">🚀 Landing Page</option>
               <option value="portfolio">💼 Portfolio/Blog</option>
+              <option value="ecommerce">🛍️ E-Commerce Grid</option>
+              <option value="chat">💬 Chat Application</option>
             </select>
           </div>
         </div>
@@ -209,6 +211,84 @@
                 <div class="blog-avatar"></div>
                 <h4 class="blog-sidebar-title">About Creator</h4>
                 <p class="blog-sidebar-text">Senior Frontend Engineer writing cleaner UI design guides.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- E-Commerce Body -->
+          <div class="mockup-body template-section" id="mockup-body-ecommerce" style="display:none; flex-direction:column; overflow-y:auto; padding: 16px 20px; box-sizing: border-box; width: 100%; height: 100%;">
+            <div class="ecommerce-header" style="display:flex; justify-content:space-between; align-items:center; border-bottom:var(--preview-border-width) solid var(--preview-border-color); padding-bottom:10px; margin-bottom:15px;">
+              <div class="ecommerce-logo" style="font-family:var(--preview-heading-font); font-weight:var(--preview-heading-weight, 800); font-size:1.1rem; color:var(--preview-primary);">SHOPIFY.CO</div>
+              <div class="ecommerce-nav" style="display:flex; gap:12px; font-size:0.75rem; opacity:0.8; font-family:var(--preview-body-font);">
+                <span>Shop</span><span>Deals</span><span>Cart (2)</span>
+              </div>
+            </div>
+            <div class="ecommerce-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:15px; width: 100%; box-sizing: border-box;">
+              <div class="product-card" style="background:var(--preview-surface); border:var(--preview-border-width) solid var(--preview-border-color); border-radius:var(--preview-radius); padding:10px; display:flex; flex-direction:column; gap:8px; box-shadow:var(--preview-shadow); box-sizing: border-box;">
+                <div class="product-image" style="background:color-mix(in srgb, var(--preview-primary) 10%, transparent); border-radius:calc(var(--preview-radius) * 0.8); height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
+                  <span style="font-size:2rem;">🎧</span>
+                  <span class="product-badge" style="position:absolute; top:5px; left:5px; background:var(--preview-accent); color:var(--preview-btn-text); font-size:0.6rem; padding:2px 6px; border-radius:100px; font-weight:700; font-family:var(--preview-body-font);">NEW</span>
+                </div>
+                <div class="product-info" style="font-family:var(--preview-body-font);">
+                  <h4 style="font-family:var(--preview-heading-font); font-weight:var(--preview-heading-weight, 800); font-size:0.85rem; margin:0 0 4px 0; color:var(--preview-text);">Wireless Headset</h4>
+                  <div style="display:flex; gap:2px; color:var(--preview-secondary); font-size:0.6rem; margin-bottom:6px;">★★★★★</div>
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-family:var(--preview-heading-font); font-weight:bold; font-size:0.9rem; color:var(--preview-text);">$149.00</span>
+                    <button class="buy-btn" style="background:var(--preview-primary); color:var(--preview-btn-text); border:none; border-radius:calc(var(--preview-radius) * 0.5); padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">Buy</button>
+                  </div>
+                </div>
+              </div>
+              <div class="product-card" style="background:var(--preview-surface); border:var(--preview-border-width) solid var(--preview-border-color); border-radius:var(--preview-radius); padding:10px; display:flex; flex-direction:column; gap:8px; box-shadow:var(--preview-shadow); box-sizing: border-box;">
+                <div class="product-image" style="background:color-mix(in srgb, var(--preview-secondary) 10%, transparent); border-radius:calc(var(--preview-radius) * 0.8); height:100px; display:flex; align-items:center; justify-content:center; position:relative;">
+                  <span style="font-size:2rem;">⌚</span>
+                  <span class="product-badge" style="position:absolute; top:5px; left:5px; background:var(--preview-primary); color:var(--preview-btn-text); font-size:0.6rem; padding:2px 6px; border-radius:100px; font-weight:700; font-family:var(--preview-body-font);">SALE</span>
+                </div>
+                <div class="product-info" style="font-family:var(--preview-body-font);">
+                  <h4 style="font-family:var(--preview-heading-font); font-weight:var(--preview-heading-weight, 800); font-size:0.85rem; margin:0 0 4px 0; color:var(--preview-text);">Smart Watch v2</h4>
+                  <div style="display:flex; gap:2px; color:var(--preview-secondary); font-size:0.6rem; margin-bottom:6px;">★★★★☆</div>
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-family:var(--preview-heading-font); font-weight:bold; font-size:0.9rem; color:var(--preview-text);">$299.00</span>
+                    <button class="buy-btn" style="background:var(--preview-primary); color:var(--preview-btn-text); border:none; border-radius:calc(var(--preview-radius) * 0.5); padding:4px 8px; font-size:0.65rem; font-weight:bold; cursor:pointer;">Buy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Application Body -->
+          <div class="mockup-body template-section" id="mockup-body-chat" style="display:none; padding: 0; height: 100%; overflow: hidden; width: 100%; box-sizing: border-box;">
+            <div style="display:flex; height: 100%; width: 100%;">
+              <div class="chat-sidebar" style="width:140px; background:color-mix(in srgb, var(--preview-surface) 60%, transparent); border-right:var(--preview-border-width) solid var(--preview-border-color); display:flex; flex-direction:column; padding:10px; gap:8px; box-sizing: border-box;">
+                <div style="font-family:var(--preview-heading-font); font-weight:bold; font-size:0.85rem; color:var(--preview-text); margin-bottom:5px;">Conversations</div>
+                <div class="chat-user-item active" style="background:color-mix(in srgb, var(--preview-primary) 15%, transparent); padding:6px 8px; border-radius:calc(var(--preview-radius) * 0.7); display:flex; align-items:center; gap:6px;">
+                  <div style="width:16px; height:16px; border-radius:50%; background:var(--preview-primary);"></div>
+                  <div style="font-size:0.65rem; font-weight:600; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; font-family:var(--preview-body-font);">Alex Rivera</div>
+                </div>
+                <div class="chat-user-item" style="padding:6px 8px; border-radius:calc(var(--preview-radius) * 0.7); display:flex; align-items:center; gap:6px; opacity:0.7;">
+                  <div style="width:16px; height:16px; border-radius:50%; background:var(--preview-secondary);"></div>
+                  <div style="font-size:0.65rem; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; font-family:var(--preview-body-font);">Jane Doe</div>
+                </div>
+              </div>
+              <div class="chat-main" style="flex:1; display:flex; flex-direction:column; background:var(--preview-background); min-width: 0;">
+                <div class="chat-header" style="padding:8px 12px; border-bottom:var(--preview-border-width) solid var(--preview-border-color); display:flex; align-items:center; justify-content:space-between; background:var(--preview-surface);">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <div style="width:8px; height:8px; border-radius:50%; background:#10b981;"></div>
+                    <span style="font-weight:bold; font-size:0.75rem; color:var(--preview-text); font-family:var(--preview-heading-font);">Alex Rivera</span>
+                  </div>
+                  <span style="font-size:0.65rem; opacity:0.6; font-family:var(--preview-body-font);">Active now</span>
+                </div>
+                <div class="chat-messages" style="flex:1; padding:12px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; box-sizing: border-box;">
+                  <div class="message bubble-in" style="align-self:flex-start; background:var(--preview-surface); border:var(--preview-border-width) solid var(--preview-border-color); color:var(--preview-text); padding:6px 10px; border-radius:calc(var(--preview-radius) * 0.8); max-width:80%; font-size:0.7rem; box-shadow:var(--preview-shadow); font-family:var(--preview-body-font);">
+                    Hey! Did you check out the new design customizer?
+                  </div>
+                  <div class="message bubble-out" style="align-self:flex-end; background:var(--preview-primary); color:var(--preview-btn-text); padding:6px 10px; border-radius:calc(var(--preview-radius) * 0.8); max-width:80%; font-size:0.7rem; box-shadow:var(--preview-shadow); font-family:var(--preview-body-font);">
+                    Yes, it looks amazing! The contrast auto-fix is super helpful.
+                  </div>
+                </div>
+                <div class="chat-input-bar" style="padding:8px 12px; border-top:var(--preview-border-width) solid var(--preview-border-color); display:flex; gap:8px; align-items:center; background:var(--preview-surface); box-sizing: border-box;">
+                  <div style="flex:1; background:var(--preview-background); border:var(--preview-border-width) solid var(--preview-border-color); border-radius:calc(var(--preview-radius) * 0.5); padding:6px 10px; font-size:0.65rem; color:var(--preview-text); opacity:0.6; font-family:var(--preview-body-font);">Type a message...</div>
+                  <button style="background:var(--preview-accent); color:var(--preview-btn-text); border:none; border-radius:calc(var(--preview-radius) * 0.5); padding:6px 10px; font-size:0.65rem; font-weight:bold; cursor:pointer;">Send</button>
+                </div>
               </div>
             </div>
           </div>
@@ -342,6 +422,8 @@
               <button class="code-tab" data-tab="html">📄 Template</button>
               <button class="code-tab" data-tab="figma">💎 Figma Tokens</button>
               <button class="code-tab" data-tab="scss">🎨 SCSS</button>
+              <button class="code-tab" data-tab="css-in-js">CSS-in-JS</button>
+              <button class="code-tab" data-tab="css-modules">CSS Modules</button>
               <button class="code-tab" data-tab="bookmarklet">🔖 Bookmarklet</button>
             </div>
             <div style="display:flex; gap:8px;">
@@ -357,6 +439,8 @@
             <pre class="code-block" id="block-html"><code id="html-code-output"></code></pre>
             <pre class="code-block" id="block-figma"><code id="figma-code-output"></code></pre>
             <pre class="code-block" id="block-scss"><code id="scss-code-output"></code></pre>
+            <pre class="code-block" id="block-css-in-js"><code id="css-in-js-code-output"></code></pre>
+            <pre class="code-block" id="block-css-modules"><code id="css-modules-code-output"></code></pre>
             <div class="code-block" id="block-bookmarklet" style="padding:24px; text-align:center;">
               <h4 style="margin-bottom: 12px; font-family: var(--font-heading); color: var(--site-text);">Magic Injector</h4>
               <p style="font-size:0.9rem; opacity:0.8; margin-bottom: 16px;">Drag the button below to your browser's Bookmark Bar. Click it on any website to inject this theme!</p>
@@ -451,6 +535,21 @@
         </select>
       </div>
 
+      <!-- Color Harmony Generator -->
+      <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px;">
+        <label for="harmony-select" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">🌈 Color Harmony</label>
+        <div style="display:flex; gap:8px;">
+          <select id="harmony-select" style="flex:1; padding:8px 12px; background:var(--site-surface-2); border:1px solid var(--site-border); border-radius:8px; color:var(--site-text); font-family:var(--font-inter); font-size:0.85rem; outline:none; cursor:pointer;">
+            <option value="analogous">Analogous</option>
+            <option value="complementary">Complementary</option>
+            <option value="triadic">Triadic</option>
+            <option value="tetradic">Tetradic</option>
+            <option value="split-complementary">Split-Complementary</option>
+          </select>
+          <button id="btn-apply-harmony" style="padding:8px 12px; background:linear-gradient(135deg, #3b82f6, #8b5cf6); color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:0.85rem; font-weight:bold;">Apply</button>
+        </div>
+      </div>
+
       <!-- Google Fonts Selection -->
       <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px;">
         <label for="font-picker-heading" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">🔤 Heading Font</label>
@@ -474,6 +573,18 @@
           <option value="Lora">Lora</option>
           <option value="Quicksand">Quicksand</option>
         </select>
+      </div>
+
+      <!-- Font Scale & Weights Customizer -->
+      <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px;">
+        <label for="edit-font-scale" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">📐 Font Scale Ratio (<span id="val-font-scale">1.25</span>)</label>
+        <input type="range" id="edit-font-scale" min="1.1" max="1.8" step="0.05" value="1.25" style="width:100%; margin-bottom:8px;">
+        
+        <label for="edit-heading-weight" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">🔠 Heading Weight (<span id="val-heading-weight">800</span>)</label>
+        <input type="range" id="edit-heading-weight" min="400" max="900" step="100" value="800" style="width:100%; margin-bottom:8px;">
+
+        <label for="edit-body-weight" style="display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--site-text-muted);">🔤 Body Weight (<span id="val-body-weight">400</span>)</label>
+        <input type="range" id="edit-body-weight" min="300" max="700" step="100" value="400" style="width:100%;">
       </div>
 
       <!-- Style Presets Grid -->
@@ -504,6 +615,13 @@
       </div>
       
       <button class="btn-reset-customizer" id="btn-reset-customizer" style="width:100%; padding:12px; background:var(--site-surface-2); border:1px solid var(--site-border); color:var(--site-text); border-radius:8px; font-weight:600; cursor:pointer; font-size:0.9rem; transition:0.3s;">Reset Colors</button>
+      
+      <!-- JSON Import/Export -->
+      <div class="customizer-field" style="margin-top: 16px; border-top: 1px solid var(--site-border); padding-top: 16px; display:flex; gap:8px;">
+        <button id="btn-export-json" style="flex:1; padding:10px; background:var(--site-surface-2); border:1px solid var(--site-border); color:var(--site-text); border-radius:8px; font-weight:600; cursor:pointer; font-size:0.8rem;">📤 Export JSON</button>
+        <button id="btn-import-json" style="flex:1; padding:10px; background:var(--site-surface-2); border:1px solid var(--site-border); color:var(--site-text); border-radius:8px; font-weight:600; cursor:pointer; font-size:0.8rem;">📥 Import JSON</button>
+        <input type="file" id="input-import-json" accept=".json" style="display:none;">
+      </div>
     </div>
   </div>
 

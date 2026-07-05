@@ -68,7 +68,7 @@ let customTypoText = '';
 
 function init() {
   const params = new URLSearchParams(window.location.search);
-  const themeId = params.get('id');
+  let themeId = params.get('id');
   const magicParam = params.get('magic');
 
   if (magicParam) {
@@ -79,8 +79,13 @@ function init() {
       const mode = parts[2];
       activeTheme = generateMagicTheme(h, s, mode);
     }
-  } else if (themeId) {
-    activeTheme = themes.find(t => t.id === themeId);
+  } else {
+    if (!themeId) {
+      themeId = localStorage.getItem('selected-theme-id');
+    }
+    if (themeId) {
+      activeTheme = themes.find(t => t.id === themeId);
+    }
   }
 
   if (!activeTheme) {
@@ -147,6 +152,11 @@ function updateContainerStyles(theme) {
   container.style.setProperty('--preview-border-width', theme.properties.borderWidth);
   container.style.setProperty('--preview-border-color', theme.properties.borderColor);
   container.style.setProperty('--preview-btn-text', theme.btnText || '#fff');
+  
+  // Custom Typography Scale and Weights
+  container.style.setProperty('--preview-font-scale', theme.typography.fontScale || '1.25');
+  container.style.setProperty('--preview-heading-weight', theme.typography.headingWeight || '800');
+  container.style.setProperty('--preview-body-weight', theme.typography.bodyWeight || '400');
 
   const shadow = `${theme.properties.shadowOffset} ${theme.properties.shadowColor}`;
   dom.themePageContainer.style.setProperty('--preview-shadow', shadow);
@@ -216,6 +226,29 @@ function initCustomizerValues(theme) {
   const wVal = parseInt(theme.properties.borderWidth) || 0;
   dom.editWidth.value = wVal;
   document.getElementById('val-border-width').textContent = `${wVal}px`;
+
+  // Init typography scale and weights
+  if (theme.typography) {
+    const editScale = document.getElementById('edit-font-scale');
+    const editHeadingW = document.getElementById('edit-heading-weight');
+    const editBodyW = document.getElementById('edit-body-weight');
+    
+    if (editScale) {
+      editScale.value = theme.typography.fontScale || '1.25';
+      const lbl = document.getElementById('val-font-scale');
+      if (lbl) lbl.textContent = editScale.value;
+    }
+    if (editHeadingW) {
+      editHeadingW.value = theme.typography.headingWeight || '800';
+      const lbl = document.getElementById('val-heading-weight');
+      if (lbl) lbl.textContent = editHeadingW.value;
+    }
+    if (editBodyW) {
+      editBodyW.value = theme.typography.bodyWeight || '400';
+      const lbl = document.getElementById('val-body-weight');
+      if (lbl) lbl.textContent = editBodyW.value;
+    }
+  }
 }
 
 function renderPalette(theme) {
@@ -615,6 +648,83 @@ $theme-border-color: ${theme.properties.borderColor || 'rgba(0,0,0,0.1)'};
 $theme-font-heading: ${theme.typography.headingFont};
 $theme-font-body: ${theme.typography.bodyFont};`;
 
+  // CSS-in-JS
+  const cssInJsCode = `import styled from 'styled-components';
+
+export const theme = {
+  colors: {
+    primary: '${theme.colors.primary}',
+    secondary: '${theme.colors.secondary}',
+    accent: '${theme.colors.accent}',
+    background: '${theme.colors.background}',
+    surface: '${theme.colors.surface}',
+    text: '${theme.colors.text}',
+  },
+  typography: {
+    headingFont: "${theme.typography.headingFont}",
+    bodyFont: "${theme.typography.bodyFont}",
+    fontScale: "${theme.typography.fontScale || '1.25'}",
+    headingWeight: "${theme.typography.headingWeight || '800'}",
+    bodyWeight: "${theme.typography.bodyWeight || '400'}",
+  },
+  properties: {
+    borderRadius: '${theme.properties.borderRadius}',
+    borderWidth: '${theme.properties.borderWidth}',
+    borderColor: '${theme.properties.borderColor || 'rgba(0,0,0,0.1)'}',
+    shadow: '${theme.properties.shadowOffset} ${theme.properties.shadowColor}',
+  }
+};
+
+export const Button = styled.button\`
+  background: \${props => props.theme.colors.primary};
+  color: ${theme.btnText || '#fff'};
+  border: \${props => props.theme.properties.borderWidth} solid \${props => props.theme.properties.borderColor};
+  border-radius: \${props => props.theme.properties.borderRadius};
+  padding: 10px 20px;
+  font-family: \${props => props.theme.typography.bodyFont};
+  cursor: pointer;
+  box-shadow: \${props => props.theme.properties.shadow};
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
+\`;`;
+
+  // CSS Modules
+  const cssModulesCode = `/* Theme.module.css */
+.themeWrapper {
+  --primary: ${theme.colors.primary};
+  --secondary: ${theme.colors.secondary};
+  --accent: ${theme.colors.accent};
+  --background: ${theme.colors.background};
+  --surface: ${theme.colors.surface};
+  --text: ${theme.colors.text};
+  --radius: ${theme.properties.borderRadius};
+  --border-width: ${theme.properties.borderWidth};
+  --border-color: ${theme.properties.borderColor || 'rgba(0,0,0,0.1)'};
+  --shadow: ${theme.properties.shadowOffset} ${theme.properties.shadowColor};
+  --font-heading: ${theme.typography.headingFont};
+  --font-body: ${theme.typography.bodyFont};
+}
+
+.button {
+  background-color: var(--primary);
+  color: ${theme.btnText || '#fff'};
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-family: var(--font-body);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+`;
+
   // Populate code blocks
   if(dom.cssCodeOutput) dom.cssCodeOutput.textContent = cssCode;
   if(dom.tailwindCodeOutput) dom.tailwindCodeOutput.textContent = 'module.exports = ' + JSON.stringify(tailwindObj, null, 2) + ';';
@@ -622,6 +732,11 @@ $theme-font-body: ${theme.typography.bodyFont};`;
   if(dom.htmlCodeOutput) dom.htmlCodeOutput.textContent = htmlTemplateCode;
   if(dom.figmaCodeOutput) dom.figmaCodeOutput.textContent = JSON.stringify(figmaTokensObj, null, 2);
   if(dom.scssCodeOutput) dom.scssCodeOutput.textContent = scssCode;
+  
+  const cssInJsOutput = document.getElementById('css-in-js-code-output');
+  const cssModulesOutput = document.getElementById('css-modules-code-output');
+  if (cssInJsOutput) cssInJsOutput.textContent = cssInJsCode;
+  if (cssModulesOutput) cssModulesOutput.textContent = cssModulesCode;
 
   // Bookmarklet
   const bookmarkletCode = `javascript:(function(){
@@ -1068,6 +1183,10 @@ function bindEvents() {
         copyToClipboard(dom.figmaCodeOutput.textContent, 'Figma Tokens Copied!');
       } else if (activeTab === 'scss') {
         copyToClipboard(dom.scssCodeOutput.textContent, 'SCSS Variables Copied!');
+      } else if (activeTab === 'css-in-js') {
+        copyToClipboard(document.getElementById('css-in-js-code-output').textContent, 'CSS-in-JS Copied!');
+      } else if (activeTab === 'css-modules') {
+        copyToClipboard(document.getElementById('css-modules-code-output').textContent, 'CSS Modules Copied!');
       }
     });
   }
@@ -1203,6 +1322,32 @@ function bindEvents() {
     dom.cssCodeOutput.addEventListener('focus', () => playSound('click'));
   }
 
+  // Premium Features Bindings
+  
+  // 1. Color Harmony
+  const btnApplyHarmony = document.getElementById('btn-apply-harmony');
+  if (btnApplyHarmony) {
+    btnApplyHarmony.addEventListener('click', applyColorHarmony);
+  }
+
+  // 2. Font Scale & Weights Customizer
+  const editScale = document.getElementById('edit-font-scale');
+  const editHeadingW = document.getElementById('edit-heading-weight');
+  const editBodyW = document.getElementById('edit-body-weight');
+
+  if (editScale) editScale.addEventListener('input', handleTypographyCustomizer);
+  if (editHeadingW) editHeadingW.addEventListener('input', handleTypographyCustomizer);
+  if (editBodyW) editBodyW.addEventListener('input', handleTypographyCustomizer);
+
+  // 3. JSON Import/Export
+  const btnExportJson = document.getElementById('btn-export-json');
+  const btnImportJson = document.getElementById('btn-import-json');
+  const inputImportJson = document.getElementById('input-import-json');
+
+  if (btnExportJson) btnExportJson.addEventListener('click', exportThemeJson);
+  if (btnImportJson) btnImportJson.addEventListener('click', triggerImportJson);
+  if (inputImportJson) inputImportJson.addEventListener('change', handleImportJson);
+
   // H. Sfx click ticks for inputs and checkboxes
   const clickableElements = document.querySelectorAll('input[type="color"], input[type="range"], .preview-toggle input, .preview-btn, .nav-link, button');
   clickableElements.forEach(el => {
@@ -1256,26 +1401,196 @@ function playSound(type = 'click') {
 
     const now = audioCtx.currentTime;
 
+    // Determine theme sound profile based on categories
+    let profile = 'modern';
+    if (activeTheme && activeTheme.categories) {
+      if (activeTheme.categories.includes('gaming') || activeTheme.categories.includes('playful')) {
+        profile = 'retro';
+      } else if (activeTheme.categories.includes('dark') || activeTheme.categories.includes('modern')) {
+        profile = 'cyber';
+      } else if (activeTheme.categories.includes('elegant') || activeTheme.categories.includes('luxury')) {
+        profile = 'elegant';
+      }
+    }
+
     if (type === 'click') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(1000, now);
-      osc.frequency.exponentialRampToValueAtTime(150, now + 0.04);
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-      osc.start(now);
-      osc.stop(now + 0.05);
+      if (profile === 'retro') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.setValueAtTime(1200, now + 0.02);
+        gain.gain.setValueAtTime(0.04, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      } else if (profile === 'cyber') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(20, now + 0.1);
+        gain.gain.setValueAtTime(0.06, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } else if (profile === 'elegant') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else {
+        // modern / default
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1000, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.04);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      }
     } else if (type === 'chime') {
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(523.25, now); // C5
-      osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
-      gain.gain.setValueAtTime(0.05, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-      osc.start(now);
-      osc.stop(now + 0.35);
+      if (profile === 'retro') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(523.25, now); // C5
+        osc.frequency.setValueAtTime(659.25, now + 0.06); // E5
+        osc.frequency.setValueAtTime(783.99, now + 0.12); // G5
+        gain.gain.setValueAtTime(0.03, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      } else if (profile === 'cyber') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.linearRampToValueAtTime(600, now + 0.15);
+        gain.gain.setValueAtTime(0.04, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.26);
+      } else if (profile === 'elegant') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, now); // C5
+        osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.15); // E5
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.55);
+      } else {
+        // default chime
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now); // C5
+        osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.35);
+      }
     }
   } catch (e) {
     console.warn('AudioContext failed:', e);
   }
+}
+
+// PREMIUM HARMONIES & IMPORT/EXPORT HELPER FUNCTIONS
+
+function applyColorHarmony() {
+  if (!activeTheme || !activeTheme.colors || !activeTheme.colors.primary) return;
+  playSound('click');
+  const harmonySelect = document.getElementById('harmony-select');
+  if (!harmonySelect) return;
+  const harmony = harmonySelect.value;
+  const primaryHex = activeTheme.colors.primary;
+  const primaryHsl = hexToHSL(primaryHex);
+  
+  let secH = primaryHsl.h;
+  let accH = primaryHsl.h;
+  
+  if (harmony === 'analogous') {
+    secH = (primaryHsl.h + 30) % 360;
+    accH = (primaryHsl.h - 30 + 360) % 360;
+  } else if (harmony === 'complementary') {
+    secH = (primaryHsl.h + 180) % 360;
+    accH = (primaryHsl.h + 180) % 360;
+  } else if (harmony === 'triadic') {
+    secH = (primaryHsl.h + 120) % 360;
+    accH = (primaryHsl.h + 240) % 360;
+  } else if (harmony === 'tetradic') {
+    secH = (primaryHsl.h + 90) % 360;
+    accH = (primaryHsl.h + 180) % 360;
+  } else if (harmony === 'split-complementary') {
+    secH = (primaryHsl.h + 150) % 360;
+    accH = (primaryHsl.h + 210) % 360;
+  }
+  
+  activeTheme.colors.secondary = HSLToHex(secH, primaryHsl.s, primaryHsl.l);
+  activeTheme.colors.accent = HSLToHex(accH, Math.max(10, primaryHsl.s - 10), Math.max(10, primaryHsl.l - 5));
+  
+  renderThemeDetails(activeTheme);
+  showToast(`Applied ${harmony} Harmony! 🌈`);
+}
+
+function exportThemeJson() {
+  playSound('click');
+  if (!activeTheme) return;
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(activeTheme, null, 2));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", `${activeTheme.id || 'custom'}-theme.json`);
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+  showToast("Theme JSON exported! 📤");
+}
+
+function triggerImportJson() {
+  playSound('click');
+  const fileInput = document.getElementById('input-import-json');
+  if (fileInput) fileInput.click();
+}
+
+function handleImportJson(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const parsed = JSON.parse(evt.target.result);
+      if (parsed.colors && parsed.typography && parsed.properties) {
+        activeTheme = parsed;
+        renderThemeDetails(activeTheme);
+        showToast("Theme JSON imported! 📥");
+      } else {
+        showToast("Invalid JSON structure! ⚠️");
+      }
+    } catch(err) {
+      showToast("Error parsing JSON file! ⚠️");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function handleTypographyCustomizer(e) {
+  if (!activeTheme) return;
+  const id = e.target.id;
+  const val = e.target.value;
+  
+  if (!activeTheme.typography) activeTheme.typography = {};
+  
+  if (id === 'edit-font-scale') {
+    activeTheme.typography.fontScale = val;
+    const lbl = document.getElementById('val-font-scale');
+    if (lbl) lbl.textContent = val;
+  } else if (id === 'edit-heading-weight') {
+    activeTheme.typography.headingWeight = val;
+    const lbl = document.getElementById('val-heading-weight');
+    if (lbl) lbl.textContent = val;
+  } else if (id === 'edit-body-weight') {
+    activeTheme.typography.bodyWeight = val;
+    const lbl = document.getElementById('val-body-weight');
+    if (lbl) lbl.textContent = val;
+  }
+  
+  updateContainerStyles(activeTheme);
+  updateCodeBlocks(activeTheme);
+  renderTypography(activeTheme);
 }
 
 // 3. Contrast Optimizer (Auto-Fixer HSL)
